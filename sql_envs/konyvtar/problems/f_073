@@ -1,0 +1,7 @@
+73. Hány olyan könyv van, amelyiknek az oldalankénti ára kevesebb, mint 10?
+============
+order_matters=False
+============
+select count(*)
+from konyvtar.konyv
+where ar/oldalszam<10

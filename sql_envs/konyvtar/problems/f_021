@@ -1,0 +1,8 @@
+21. Keressük azokat a könyveket, amelyek sci-fi témájúak vagy olcsóbbak 1000-nél és oldalszámuk több, mint 200 vagy a Gondolat kiadó a kiadójuk.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where (tema='sci-fi' or ar<1000)
+and (oldalszam>200 or kiado='Gondolat');

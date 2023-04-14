@@ -1,0 +1,6 @@
+41. Listázzuk ki a tagok vezetékneveit! Próbáljuk ki a replace függvényt. Ha a vezetéknévben szerepel az 'er' karaktersorozat, cseréljük le 3 db *-ra.
+============
+order_matters=False
+============
+select vezeteknev, replace(vezeteknev,'er','***' )
+from konyvtar.tag;

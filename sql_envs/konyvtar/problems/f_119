@@ -1,0 +1,13 @@
+119. Listázzuk ki azokat a kiadókat, amelyek 1000000 kevesebb összhonoráriumot osztottak ki azoknak a szerzõknek, akik 1950 elõtt születtek. A lista legyen rendezett.
+============
+order_matters=False
+============
+select kiado, sum(honorarium)
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+inner join konyvtar.szerzo sz
+on ksz.szerzo_azon=sz.szerzo_azon
+where sz.szuletesi_datum<to_date('1950','yyyy')
+group by kiado
+having sum(nvl(honorarium,0))<1000000
+order by kiado;

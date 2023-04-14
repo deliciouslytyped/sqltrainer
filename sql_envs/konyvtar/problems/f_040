@@ -1,0 +1,6 @@
+40. Listázzuk ki a tagok vezetéknevét! Próbáljuk ki a substr függvény mûködését, a 3. karaktertõl kezdõdõen vegyünk 4 karaktert a vezetéknévbõl.
+============
+order_matters=False
+============
+select vezeteknev, substr(vezeteknev,3,4)
+from konyvtar.tag;

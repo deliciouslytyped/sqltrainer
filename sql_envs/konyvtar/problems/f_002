@@ -1,0 +1,6 @@
+2. Listázzuk ki a tagok nevét!
+============
+order_matters=False
+============
+select vezeteknev, keresztnev
+from konyvtar.tag;

@@ -1,0 +1,11 @@
+120. Keressük azokat a szerzõket, akik krimi, sci-fi, horror témájú könyvek megírásáért 2 milliónál több összhonoráriumot kaptak.
+============
+order_matters=False
+============
+select sz.szerzo_azon, sz.vezeteknev, sz.keresztnev, sum(honorarium)
+from konyvtar.szerzo sz inner join
+konyvtar.konyvszerzo ksz on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv kv on ksz.konyv_azon=kv.konyv_azon
+where tema in ('krimi', 'sci-fi', 'horror')
+group by sz.szerzo_azon, sz.vezeteknev, sz.keresztnev
+having sum(honorarium)>2000000;

@@ -1,0 +1,9 @@
+126. Az egyes könyveknek hány szerzõje van?
+============
+order_matters=False
+============
+select ko.konyv_azon, cim, count(*), kiado, tema
+from konyvtar.konyv ko inner join konyvtar.konyvszerzo ksz
+on ko.konyv_azon=ksz.konyv_azon
+group by ko.konyv_azon, cim, kiado, tema
+order by cim;

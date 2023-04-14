@@ -1,0 +1,7 @@
+152. Melyik könyvbõl nincs példány?
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where konyv_azon not in (select konyv_azon from konyvtar.konyvtari_konyv);

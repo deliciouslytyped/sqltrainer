@@ -1,0 +1,12 @@
+155. Melyik könyvhöz tartozik a legkevesebb példány?;
+============
+order_matters=False
+============
+select ko.konyv_azon, ko.cim, count(leltari_szam)
+from konyvtar.konyv ko left outer join konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+group by ko.konyv_azon, ko.cim
+having count(leltari_szam)=(select min(count(leltari_szam))
+from konyvtar.konyv ko left outer join konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+group by ko.konyv_azon);

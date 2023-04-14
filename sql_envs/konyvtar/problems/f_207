@@ -1,0 +1,16 @@
+207. Töröljük azokat a kölcsönzéseket, amelyben horror, sci-fi, vagy krimi témájú könyveket olyan nõi olvasók kölcsönöztek, akik Debrecenben laknak.
+============
+order_matters=False
+============
+delete
+from kolcsonzes
+where leltari_szam in (select leltari_szam
+from konyvtar.konyvtari_konyv
+where konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where tema in ('horror', 'sci-fi','krimi')))
+and tag_azon in (select olvasojegyszam
+from konyvtar.tag
+where nem='n'
+and substr(cim,6,instr(cim,',')-6)='Debrecen');
+commit;

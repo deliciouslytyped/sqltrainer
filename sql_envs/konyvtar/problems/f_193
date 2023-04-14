@@ -1,0 +1,10 @@
+193. Hozzunk létre nézetet v_szerzo_konyv néven, amelyben azt listázzuk, hogy az egyes könyveknek kik a szerzõi. A lista csak azokat a könyveket tartalmazza, amelyeknek van szerzõje. A lista tartalmazza a könyvek oldalankénti árát is.
+============
+order_matters=False
+============
+create view v_szerzo_konyv as
+select cim, vezeteknev, keresztnev, ar/oldalszam ar_per_oldalszam
+from konyvtar.szerzo sz inner join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon;

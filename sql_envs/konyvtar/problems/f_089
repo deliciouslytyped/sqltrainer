@@ -1,0 +1,9 @@
+89. Melyek azok a témák, amelyekben 3-nál több olyan könyvet adtak ki, amelyeknek az ára 1000 és 3000 között van?
+============
+order_matters=False
+============
+select tema, count(konyv_azon)
+from konyvtar.konyv
+where ar between 1000 and 3000
+group by tema
+having count(konyv_azon)>3;

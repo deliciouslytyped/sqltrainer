@@ -1,0 +1,8 @@
+146. Ki a legidõsebb szerzõ?
+============
+order_matters=False
+============
+select *
+from konyvtar.szerzo
+where szuletesi_datum=(select min(szuletesi_datum)
+from konyvtar.szerzo);

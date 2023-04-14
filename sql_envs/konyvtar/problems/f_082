@@ -1,0 +1,7 @@
+82. Témánként mennyi az átlagos oldalszám?
+============
+order_matters=False
+============
+select tema, avg(oldalszam)
+from konyvtar.konyv
+group by tema;

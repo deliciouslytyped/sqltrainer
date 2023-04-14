@@ -1,0 +1,7 @@
+180. Töröljük a piros színû bicikliket!
+============
+order_matters=False
+============
+delete from bicikli
+where szin='piros';
+commit;

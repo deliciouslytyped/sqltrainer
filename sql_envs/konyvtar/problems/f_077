@@ -1,0 +1,9 @@
+77. Témánként mennyi a minimum ár, a maximum ár, az árak összege, az átlagár, és a könyvek száma? A lista legyen téma szerint rendezett.
+============
+order_matters=False
+============
+select tema, min(ar), max(ar), sum(ar),
+avg(ar), count(*), count(KONYV_AZON)
+from konyvtar.konyv
+group by tema
+order by tema;

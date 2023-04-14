@@ -1,0 +1,6 @@
+29. Listázzuk ki -5 abszolút értékét!
+============
+order_matters=False
+============
+select abs(-5)
+from dual;

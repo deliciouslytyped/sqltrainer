@@ -1,0 +1,8 @@
+211. A 2000 után kiadott könyvek árát növeljük a duplájára, az oldalszámát felezzük el.
+============
+order_matters=False
+============
+update konyv
+set ar=ar*2, oldalszam=oldalszam/2
+where kiadas_datuma>=to_date('2000','yyyy');
+commit;

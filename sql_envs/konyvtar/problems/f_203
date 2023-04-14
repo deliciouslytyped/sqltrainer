@@ -1,0 +1,12 @@
+203. Agatha Christie által írt összes könyvbõl vegyünk fel egy-egy új példányt a könyvtári könyv táblába. A példányok értéke egyezzen meg a könyvek árával. A könyvek leltári számát generáljuk a szerzõ monogramjából, a könyv_azonosítójából és a mai dátumból.
+============
+order_matters=False
+============
+insert into konyvtari_konyv (konyv_azon, ertek, leltari_szam)
+select ko.konyv_azon, ar,
+substr(vezeteknev, 1,1)||substr(keresztnev,1,1)||ko.konyv_azon||to_char(sysdate,'yyyymmdd')
+from konyvtar.konyv ko, konyvtar.konyvszerzo ksz, konyvtar.szerzo sz
+where ko.konyv_azon=ksz.konyv_azon
+and ksz.szerzo_azon=sz.szerzo_azon
+and keresztnev='Agatha' and vezeteknev='Christie';
+commit;

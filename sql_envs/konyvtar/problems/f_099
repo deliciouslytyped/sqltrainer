@@ -1,0 +1,8 @@
+99. Melyik az a hónap (év nélkül), amikor 1-nél több szerzõ született?
+============
+order_matters=False
+============
+select to_char(szuletesi_datum,'mm'), count(*)
+from konyvtar.szerzo
+group by to_char(szuletesi_datum,'mm')
+having count(*)>1;

@@ -1,0 +1,10 @@
+111. Mi az Agatha Christie által írt könyvek címe?
+============
+order_matters=False
+============
+select cim
+from konyvtar.szerzo sz inner join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon
+where vezeteknev='Christie' and keresztnev='Agatha';

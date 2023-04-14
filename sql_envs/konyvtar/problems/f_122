@@ -1,0 +1,9 @@
+122. Hány példány tartozik az egyes könyvekhez (azon, cim)? Csak azokat a könyveket listázzuk, amelyekhez tartozik példány.
+============
+order_matters=False
+============
+select kv.cim, count(kk.leltari_szam), kv.konyv_azon
+from konyvtar.konyv kv inner join konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+group by kv.cim, kv.konyv_azon
+order by cim;

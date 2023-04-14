@@ -1,0 +1,8 @@
+46. Listázzuk ki a mai dátumot, az egy évvel késõbbi dátumot és az egy évvel korábbi dátumot.
+============
+order_matters=False
+============
+select to_char(sysdate,'yyyy.mon dd hh24:mi:ss'),
+to_char(add_months(sysdate,12),'yyyy.mon dd hh24:mi:ss'),
+to_char(add_months(sysdate,-12),'yyyy.mon dd hh24:mi:ss')
+from dual;

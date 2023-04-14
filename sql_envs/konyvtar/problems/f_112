@@ -1,0 +1,17 @@
+112. Keressünk olyan tagokat, akik hamarabb születtek, mint Agyalá Gyula.
+============
+order_matters=False
+============
+select tobbi.vezeteknev, tobbi.keresztnev,
+to_char(agygy.szuletesi_datum,'yyyy.mm.dd'),
+to_char(tobbi.szuletesi_datum,'yyyy.mm.dd')
+from konyvtar.tag agygy, konyvtar.tag tobbi
+where agygy.Vezeteknev='Agyalá' and agygy.keresztnev='Gyula'
+and tobbi.szuletesi_datum<agygy.szuletesi_datum;
+------------
+select tobbi.vezeteknev, tobbi.keresztnev,
+to_char(agygy.szuletesi_datum,'yyyy.mm.dd'),
+to_char(tobbi.szuletesi_datum,'yyyy.mm.dd')
+from konyvtar.tag agygy inner join konyvtar.tag tobbi
+on tobbi.szuletesi_datum<agygy.szuletesi_datum
+where agygy.Vezeteknev='Agyalá' and agygy.keresztnev='Gyula';

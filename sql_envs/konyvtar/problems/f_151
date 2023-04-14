@@ -1,0 +1,10 @@
+151. Mi a legdrágább értékû könyv címe?
+============
+order_matters=False
+============
+select cim
+from konyvtar.konyv
+where konyv_azon in (select konyv_azon
+from konyvtar.konyvtari_konyv
+where ertek=(select max(ertek)
+from konyvtar.konyvtari_konyv));

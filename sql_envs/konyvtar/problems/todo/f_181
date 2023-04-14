@@ -1,0 +1,8 @@
+181. Módosítsuk a bicikli tábla szín oszlopában lévõ értéket: fûzzünk hozzá egy '2'-es karaktert, annál a sornál, ahol az azon értéke 200!
+============
+order_matters=False
+============
+update bicikli
+set szin=szin||'2'
+where azon=200;
+commit;

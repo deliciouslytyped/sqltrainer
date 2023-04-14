@@ -1,0 +1,8 @@
+109. Mi a 40 évesnél fiatalabb olvasók által kikölcsönzött könyvek leltári száma?
+============
+order_matters=False
+============
+select leltari_szam
+from konyvtar.kolcsonzes kcs inner join konyvtar.tag tg
+on kcs.tag_azon=tg.olvasojegyszam
+where months_between(sysdate, tg.szuletesi_datum)/12<40;

@@ -1,0 +1,10 @@
+128. Kik azok a debreceni tagok, akik 1-nél több példányt kölcsönöztek ki?
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, olvasojegyszam, count(leltari_szam)
+from konyvtar.tag tg inner join konyvtar.kolcsonzes kcs
+on tg.olvasojegyszam=kcs.tag_azon
+where substr(cim, 6,instr(cim,',')-6)='Debrecen'
+group by vezeteknev, keresztnev, olvasojegyszam
+having count(leltari_szam)>1;

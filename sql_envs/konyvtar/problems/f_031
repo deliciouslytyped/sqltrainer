@@ -1,0 +1,6 @@
+31. Listázzuk ki az 'almafa' sztring hosszát!
+============
+order_matters=False
+============
+select length('almafa')
+from dual;

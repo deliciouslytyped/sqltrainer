@@ -1,0 +1,14 @@
+16. Keressük azokat a tagokat, akiknek a besorolása diák, nyugdíjas vagy gyerek.
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where besorolas='diák' or besorolas='nyugdíjas'
+or besorolas='gyerek'
+order by besorolas, vezeteknev, keresztnev;
+------------
+select *
+from konyvtar.tag
+where besorolas in ('diák','nyugdíjas','gyerek')
+order by besorolas, vezeteknev, keresztnev;

@@ -1,0 +1,9 @@
+166. Listázzuk egy listában a szerzõk keresztnevét és születési hónapját illetve a tagok keresztnevét és születési hónapját. Minden név, hónap páros annyiszor szerepeljen, ahányszor a táblákban elõfordul.
+============
+order_matters=False
+============
+select keresztnev, to_char(szuletesi_datum,'mm')
+from konyvtar.szerzo
+union all
+select keresztnev, to_char(szuletesi_datum,'mm')
+from konyvtar.tag;

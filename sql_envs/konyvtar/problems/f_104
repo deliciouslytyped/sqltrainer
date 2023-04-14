@@ -1,0 +1,8 @@
+104. Listázzuk a horror témájú könyvekért kapott honoráriumokat.
+============
+order_matters=False
+============
+select kv.konyv_azon, cim, honorarium
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+where tema='horror';

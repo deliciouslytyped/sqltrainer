@@ -1,0 +1,10 @@
+137. Kik írtak 3-nál több könyvet?
+============
+order_matters=False
+============
+select sz.szerzo_azon, sz.vezeteknev, sz.keresztnev
+from konyvtar.szerzo sz inner join
+konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon, sz.vezeteknev, sz.keresztnev
+having count(konyv_azon)>3;

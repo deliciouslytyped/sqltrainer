@@ -1,0 +1,9 @@
+54. Listázzuk ki a tagok nevét, születési dátumát, életkorát és besorolását. A lista legyen besorolás szerint csökkenõen, azon belül név növekvõen rendezett.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, besorolas,
+to_char(szuletesi_datum,'yyyy.mm.dd'),
+months_between(sysdate, szuletesi_datum)/12
+from konyvtar.tag
+order by besorolas desc, vezeteknev, keresztnev;

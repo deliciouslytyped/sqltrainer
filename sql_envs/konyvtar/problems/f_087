@@ -1,0 +1,7 @@
+87. Könyvenként (csak konyv_azon kell) mennyi az összérték?
+============
+order_matters=False
+============
+select konyv_azon, sum(ertek)
+from konyvtar.konyvtari_konyv
+group by konyv_azon;

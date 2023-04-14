@@ -1,0 +1,8 @@
+95. Melyik témának kevesebb az összára 10000-nél?
+============
+order_matters=False
+============
+select tema, sum(ar)
+from konyvtar.konyv
+group by tema
+having sum(ar)<10000;

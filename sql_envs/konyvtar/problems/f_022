@@ -1,0 +1,7 @@
+22. Keressük azokat a könyveket, amelyeknek nincs megadva a kiadójuk.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where kiado is null;

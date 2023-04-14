@@ -1,0 +1,203 @@
+html {
+}
+
+.section-block {
+    padding: 1em;
+    background: #ffea93;
+    margin: 1em;
+}
+
+.category-block {
+    margin-bottom: 0.5em;
+    margin-top: 2em;
+    background: #ffd16e;
+    padding: 0.5em;
+}
+
+.category-block h2 {
+    margin: 0;
+}
+
+.major-section {
+    margin-bottom: 0.5em;
+    margin-top: 2em;
+    padding: 0.5em;
+    background: #ffa657;
+}
+
+.major-section h2 {
+}
+
+h3 {
+    display: inline;
+}
+
+.documentation {
+    margin-bottom: 2em;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.vfill {
+    height: 100vh;
+}
+
+button {
+    border-radius: 0;
+    background-color: lightgreen;
+    border-color: green;
+}
+
+.unattempted {
+    background-color: white;
+}
+
+.unattempted-border {
+
+}
+
+.wrong {
+    background-color: red;
+}
+.wrong-border {
+    border:solid medium red;
+}
+
+.correct {
+    background-color: lightgreen;
+}
+
+.correct-border {
+    border: solid medium lightgreen;
+}
+
+.paragraphs {
+    max-width: 40em;
+}
+
+.cheshire {
+    width: 202px;
+    text-align: right;
+    font-size: small;
+}
+
+.problem-category {
+    padding-left: 2em;
+}
+
+.data-loss {
+    background-color: lightcoral;
+    border-color: darkred;
+}
+
+.prealpha {
+    color: red;
+}
+
+.dispnone {
+    display: none;
+}
+
+input[type="checkbox"][id$="_show_ans"]+label::before {
+    content: "Show ";
+}
+
+input[type="checkbox"][id$="_show_ans"]:checked+label::before {
+    content: "Hide ";
+}
+
+input[type="checkbox"][id$="_show_ans"]:checked~div[id$="_ans"] {
+    display: initial;
+}
+
+.pinschemablock {
+    display: none;
+    background-color: #ffd16e;
+    padding: 0.5em;
+    border: solid thin black;
+    resize: both; /* TODO there is no way for us to keep the resized size without JS */
+    overflow: auto;
+    direction: rtl;
+}
+.pinschemablock img {
+    width: 100%;
+}
+
+input[type="radio"][id^="pin_schema_"][value="pin"]:checked~div[id^="pin_schema_block_"] {
+    display: initial;
+    /*position: sticky;*/
+    position: fixed;
+    right: 10px;
+    top: 10px;
+}
+
+.radiohack {
+    display: none;
+}
+
+input[type="radio"][id^="pin_schema_"][value="pin"]:checked+label {
+    display: none;
+}
+
+input[type="radio"][id^="pin_schema_"][value="pin"]:checked~label.radiohack {
+    display: inline-block;
+}
+
+input[type="radio"][id^="pin_schema_"] {
+    display: none;
+}
+
+label[for^="pin_schema_"] {
+    cursor: pointer;
+}
+
+.pinschema {
+    border: medium solid darkblue;
+    background-color: lightblue;
+    width: 6em;
+    text-align: center;
+    display: inline-block;
+}
+
+.unpinschema {
+    border: medium solid darkblue;
+    background-color: dodgerblue;
+    width: 6em;
+    text-align: center;
+}
+
+
+.closebutton {
+    color:red;
+    cursor:pointer;
+}
+
+.fakebutton {
+    /*border: #ab9a5a;
+    border-width: thick;*/
+    border-width: 2px;
+    border-style: solid;
+    background-color: #fcc33a;
+    min-width: 7em;
+    display: inline-block;
+    text-align: center;
+}
+
+.negindent {
+    text-indent: -2em;
+    padding-left: 2em;
+    display: inline-block; /*not sure why I need this*/
+}
+
+.pad-left-4 {
+    padding-left: 4em;
+}
+.pad-left-2 {
+    padding-left: 2em;
+}
+
+.dispinlineblock {
+    display: inline-block;
+}

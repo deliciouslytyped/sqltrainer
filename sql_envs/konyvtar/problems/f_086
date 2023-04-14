@@ -1,0 +1,7 @@
+86. Besorolásonként mennyi az átlagos tagdíj?
+============
+order_matters=False
+============
+select besorolas, avg(tagdij)
+from konyvtar.tag
+group by besorolas;

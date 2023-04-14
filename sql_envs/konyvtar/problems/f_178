@@ -1,0 +1,6 @@
+178. Hozzunk létre táblát eldobom néven egy nev nevû oszloppal, amely maximum 30 hosszú változó hosszúságú karaktersorozat típusú.
+============
+order_matters=False
+============
+create table eldobom
+(nev varchar2(30));

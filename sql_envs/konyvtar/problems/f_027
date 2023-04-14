@@ -1,0 +1,8 @@
+27. Melyek azok a könyvek, amelyeknek az oldalankénti ára több, mint 20? Listázzuk a könyv címét, azonosítóját, oldalankénti árát. A lista legyen az oldalankénti ár szerint rendezett.
+============
+order_matters=False
+============
+select cim, konyv_azon, ar/oldalszam
+from konyvtar.konyv
+where ar/oldalszam>20
+order by ar/oldalszam;

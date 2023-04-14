@@ -1,0 +1,9 @@
+125. Kik (tag_azon) kölcsönözték ki azokat a példányokat, amelyek 3000-nél kevesebb értékûek?
+============
+order_matters=False
+============
+select tag_azon
+from konyvtar.kolcsonzes ko inner join
+konyvtar.konyvtari_konyv kk
+on ko.leltari_szam=kk.leltari_szam
+where ertek<3000;

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--
+TODO: input, feladat select,
+table display, diff
+sql fiddle scripts?
+browser compat note
+static output version
+
+responsive design or whatever
+
+settings anchor should drop the cursor in the setting box?
+
+dark mode
+
+get some icons for the problems on each schema
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<form>
+    <div id="head" class="section-block">
+        <div class="cheshire">
+            <img src="../static/cheshire.png"><br>
+            <i>[We're all mad here...]</i>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <span id="top"></span>
+        <h1>SQL Trainer</h1>
+        <a href="#tutorial">[Tutorial]</a><a href="#manual">[MANUAL]</a><a href="#settings">[Settings]</a><br>
+        <br>
+        <span class="unattempted">[unattempted]</span><span class="correct">[correct]</span><span class="wrong">[wrong]</span>
+        <br>
+        <p><a href="#konyvtar_schema"><strong>KONYVTAR</strong> schema</a> problem set:</p>
+        <span class="problem-category">Simple SELECT Statements: </span><a class="unattempted" href="#problem_1">[1]</a><a class="wrong" href="#problem_2">[2]</a><a class="correct" href="#problem_3">[3]</a>
+    </div>
+
+    <div class="category-block">
+        <span id="manual"></span>
+        <h2><a href="#top">[top]</a> MANUAL</h2>
+    </div>
+
+    <div class="section-block">
+        <h2>What is this? / Study advice</h2>
+        <div class="paragraphs">
+            <p>This is a small application/worksheet for practicing Oracle SQL with the intent of deliberate practice.
+                Questions and answers are provided, but the answers are hidden by default so that you can try to solve
+                the problems by yourself first.</p>
+            <p>The goal of machine-checking is to provide you a playground for (also) attempting alternate solutions
+                where you can be sure your solution produces the same results as the reference solution, without having
+                to try to check the results by hand.</p>
+            <p>These questions and answers were originally presented sequentially as a pdf. This tool was created with
+            the intent of providing more result-based answer checking, but to make the most of these practice questions
+            you really have to do your best to think about what you are doing and why. You should also strongly consider
+            solving a set of problems purely with SQL Developer as well.</p>
+            <p>In actuality, you should probably be writing your code in SQL Developer, because there is no fancy
+            editing here, only text entry.</p>
+            <div>Some tips:
+                <ul>
+                    <li>TODO drag to fill (and single click mess thing)</li>
+                    <li>history</li>
+                    <li>nls settings</li>
+                    <li>generating diagrams (TODO note about bad diagram)</li>
+                    <li>todo</li>
+                </ul>
+            </div>
+            <p>The best thing is to go from top to bottom and do every problem. This will also familiarize you with, and
+                drill you on- the schema.</p>
+            <p>Basically, to git gud, do everything with everything on everything.</p>
+            <p>The first test can generally be finished in 40 of the 80 minutes if you are fluent in the SQL and are
+            familiar with the schema that has been assigned. Spend the rest of the time checking your answers.</p>
+
+            <h2>Test pitfalls / additional requirements</h2>
+            <p>"must be platform and environment independent" or something, not strictly true in some senses but</p>
+            <ul>
+                <li>monomorphising dates TODO (todo link to manual sections for the date handling stuff)</li>
+                <li>what else??</li>
+            </ul>
+
+            <p>sql developer used to hang for some kind of server misconfigurtion or otherwise reason, it doesnt
+            anymore but ive built up the reflex of writing my sql in notepad++ (which will save your work automatically to a temporary file) and checking it in sqldeveloper,
+            the sqldeveloper autocomplete is crap and slow anyway* (*may be a configuration thing?) and once youve written
+            a bit of code in np++ the autocomplete of existing words there will work a lot better</p>
+
+            <p>TODO get some sample tests up here</p>
+
+            <h2>Resources:</h2>
+            <ul>
+                <li>eredeti feladatkiiras</li>
+                <li>ora21c sql manual (you should basically read through the first couple chapters, perhaps semi-targeted. its not that much?)</li>
+                <li>sql developer hash list / how to check hashes / no-login hotlinks</li>
+                <li>pano notes (second half), what for first half?</li>
+            </ul>
+
+            <h4>bonus material: (TODO password protected links)</h4>
+            <ul>
+                <li>pl sql manual</li>
+                <li>joe celko books</li>
+
+                <li>cj date and fabian pascal stuff and codd(?) and mcgoveran stuff</li>
+                <li>the mathy book</li>
+
+                <li>the three or however many db textbooks</li>
+
+                <li>the cmu db implementation lecture sets</li>
+
+                <li>widoms class is /ok/ i guess</li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>How to use this tool:</h2>
+        All SQL queries are run under your database user. This requires you to enter your login credentials in the
+        <a href="#settings">settings</a> section of the page.
+
+        <h2>Saving your game:</h2>
+
+        <h2>Tool Caveats:</h2>
+        <div class="paragraphs">
+            <p>This is meant as a practice environment. Due to implementation details (TODO mention) in which the backend
+                transforms user submitted SQL queries, some queries may break. The specific transformations are esentially
+                related to an emulated table namespacing implementation based on prefixing table names in the database
+                and in SQL statements.</p>
+            <p>Select statements should generally work. Anything else may or may not break. The environment is not meant to
+                be robust to rough treatment.</p>
+            <p>Currently many checks are unimplemented. Among other things, DDL table constraints are not checked properly.</p>
+            <p>See the many TODO comments in the source-code for additional nonsensical information.</p>
+        </div>
+
+        <h2>Troubleshooting:</h2>
+
+        <h2>Bugs/Source:</h2>
+        Bug reports, issues, and pull requests can be filed at <a href="https://github.com/deliciouslytyped/sqltrainer">https://github.com/deliciouslytyped/sqltrainer</a><br>
+        The code is currently <span class="prealpha">PRE-ALPHA</span> category.
+    </div>
+
+    <div id="tutorial" class="category-block">
+        <h2><a href="#top">[top]</a> Tool Tutorial</h2>
+    </div>
+
+    <div class="section-block">
+        <a href="#top">[top]</a><br>
+        <h3>Tutorial</h3>
+        <ol start="0">
+            <li> Go <a href="#manual">back</a> and read the manual.</li>
+        </ol>
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="tutorial_1"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </div>
+
+    <div id="settings" class="category-block">
+        <h2><a href="#top">[top]</a> Settings</h2>
+    </div>
+
+    <div class="section-block">
+        TODO autofill behaviour?<br>
+        This application runs SQL using your credentials on the SQL server:<br>
+        <label for="user">Username:</label> <input name="user" type="text"><br>
+        <label for="pass">Password:</label> <input name="pass" type="password"><br>
+        <br>
+        Session configuration code. (This is run whenever a session needs to be initialized. You don't need to do anything.)
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="session_sql"></textarea>
+        <br>
+        <p>This button will remove all tables prefixed with TODO in your schema/user, you must check the "Confirm" checkbox
+            for it to work:
+            <button name="clean_my_schema" class="data-loss">Clean my schema</button>
+            <label for="confirm_clean_my_schema">Confirm:</label><input id="confirm_1clean_my_schema" autocomplete="off" type="checkbox">
+        </p>
+    </div>
+
+    <div class="major-section">
+        <span id="konyvtar_schema"></span>
+        <h2><a href="#top">[top]</a> KONYVTAR Schema</h2>
+        <span class="problem-category">Simple SELECT Statements: </span><a class="unattempted" href="#problem_1">[1]</a><a class="wrong" href="#problem_2">[2]</a><a class="correct" href="#problem_3">[3]</a>
+        <br>
+        <br>
+        <a href="../sql_envs/konyvtar/resources/konyvtar_sema.png" target="_blank">
+            <img src="../sql_envs/konyvtar/resources/konyvtar_sema.png">
+        </a>
+
+    </div>
+
+    <div class="category-block">
+        <h2><a href="#top">[top]</a> Simple SELECT Queries</h2>
+    </div>
+
+    <div id="problem_1" class="section-block">
+        <a href="#top">[top]</a><a href="#konyvtar_schema">[schema]</a><a class="hidden" href="#">[^]</a><a href="#problem_2">[v]</a><br>
+        <h3>1.</h3>
+        Listázzuk ki a tagokat!
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="problem_1_sql"></textarea>
+        <br>
+        <button type="submit" name="problem_1_button">Submit</button>
+        <!-- Note the label needs to be after the input for css hacks -->
+        <input id="konyvtar_1_show_ans" type="checkbox" class="dispnone"><label class="fakebutton" for="konyvtar_1_show_ans">answer(s)</label>
+        <br>
+        <div id="konyvtar_1_ans" class="dispnone">
+            <textarea>SELECT * FROM konyvtar.tag;</textarea>
+        </div>
+    </div>
+
+    <div id="problem_2" class="section-block">
+        <a href="#top">[top]</a><a href="#konyvtar_schema">[schema]</a><a href="#problem_1">[^]</a><a href="#problem_3">[v]</a><br>
+        <h3>2.</h3>
+        This is problem number two.
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="problem_2_sql"></textarea>
+        <br>
+        <button type="submit" name="problem_2_button">Submit</button>
+        <!-- Note the label needs to be after the input for css hacks -->
+        <input id="konyvtar_1_show_ans" type="checkbox" class="dispnone"><label class="fakebutton" for="konyvtar_1_show_ans">answer(s)</label>
+        <br>
+        <div id="konyvtar_1_ans" class="dispnone">
+            <textarea>This is an answer.</textarea>
+        </div>
+    </div>
+
+    <div id="problem_3" class="section-block">
+        <a href="#top">[top]</a><a href="#konyvtar_schema">[schema]</a><a href="#problem_2">[^]</a><a class="hidden" href="#">[v]</a><br>
+        <div class="paragraphs negindent">
+        <h3>3.</h3>
+            Hozzunk létre táblát szemely néven a következő oszlopokkal:<br>
+                <span class="negindent">azon: max. 5 számjegyű egész szám,</span><br>
+                <span class="negindent">nev: maximum 30 hosszú változó hosszúságú karaktersorozat, amelyet ki kell tölteni,</span><br>
+                <span class="negindent">szul_dat: dátum típusú,</span><br>
+                <span class="negindent">irsz: pontosan 4 karakter hosszú sztring,</span><br>
+                <span class="negindent">cim: maximum 40 hosszú változó hosszúságú karaktersorozat,</span><br>
+                <span class="negindent">zsebpenz: szám, amelynek maximum 12 számjegye lehet, amelyből az utolsó kettő a tizedesvessző után áll.</span><br>
+            A tábla elsődleges kulcsa az azon oszlop legyen. A nev, szul_dat, cim együtt legyen egyedi. A zsebpenz, ha ki van töltve, legyen nagyobb, mint 100.
+        </div>
+
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="problem_3_sql"></textarea>
+        <br>
+        <button type="submit" name="problem_3_button">Submit</button>
+        <!-- Note the label needs to be after the input for css hacks -->
+        <input id="konyvtar_3_show_ans" type="checkbox" class="dispnone"><label class="fakebutton" for="konyvtar_3_show_ans">answer(s)</label>
+        <br>
+        <div id="konyvtar_3_ans" class="dispnone">
+<textarea>create table szemely
+(azon number(5),
+nev varchar2(30) not null,
+szul_dat date,
+irsz char(4),
+cim varchar2(40),
+zsebpenz number(12,2),
+constraint sz_pk primary key (azon),
+constraint sz_uq unique (nev, szul_dat, cim),
+constraint cs_ch check (zsebpenz>100));
+</textarea>
+        </div>
+    </div>
+
+    <div class="vfill section-block">
+        vfill
+    </div>
+</form>
+</body>
+</html>

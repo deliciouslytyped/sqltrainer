@@ -1,0 +1,10 @@
+192. Hozzunk létre táblát, amely azt tartalmazza, hogy melyik szerzõ milyen címû könyveket írt. A tábla tartalmazza a könyvek oldalankénti árát is.
+============
+order_matters=False
+============
+create table szerzok_konyvek as
+select cim, vezeteknev, keresztnev, ar/oldalszam ar_per_oldalszam
+from konyvtar.szerzo sz inner join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon;

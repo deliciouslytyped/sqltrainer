@@ -1,0 +1,14 @@
+175. Hozzunk létre táblát bicikli néven a következõ oszlopokkal:
+azon: max. 5 számjegyû egész szám,
+szin: maximum 20 hosszú változó hosszúságú karaktersorozat,
+tulaj_azon: max. 5 számjegyû egész szám.
+A tábla elsõdleges kulcsa az azon oszlop legyen. A tulaj_azon hivatkozzon a személy tábla elsõdleges kulcsára.
+============
+order_matters=False
+============
+create table bicikli
+(azon number(5),
+szin varchar2(20),
+tulaj_azon number(5),
+constraint bi_pk primary key (azon),
+constraint bi_fk foreign key (tulaj_azon) references szemely (azon));

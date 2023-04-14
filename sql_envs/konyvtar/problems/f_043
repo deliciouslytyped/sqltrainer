@@ -1,0 +1,6 @@
+43. Listázzuk ki a tagok születési dátumát!
+============
+order_matters=False
+============
+select to_char(szuletesi_datum,'yyyy.mm.dd hh24:mi:ss')
+from konyvtar.tag;

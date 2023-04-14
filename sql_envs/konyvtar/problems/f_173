@@ -1,0 +1,21 @@
+173. Hozzunk létre táblát szemely néven a következõ oszlopokkal:
+azon: max. 5 számjegyû egész szám,
+nev: maximum 30 hosszú változó hosszúságú karaktersorozat, amelyet ki kell tölteni,
+szul_dat: dátum típusú,
+irsz: pontosan 4 karakter hosszú sztring,
+cim: maximum 40 hosszú változó hosszúságú karaktersorozat,
+zsebpenz: szám, amelynek maximum 12 számjegye lehet, amelybõl az utolsó kettõ a tizedesvesszõ után áll.
+A tábla elsõdleges kulcsa az azon oszlop legyen. A nev, szul_dat, cim együtt legyen egyedi. A zsebpenz, ha ki van töltve, legyen nagyobb, mint 100.
+============
+order_matters=False
+============
+create table szemely
+(azon number(5),
+nev varchar2(30) not null,
+szul_dat date,
+irsz char(4),
+cim varchar2(40),
+zsebpenz number(12,2),
+constraint sz_pk primary key (azon),
+constraint sz_uq unique (nev, szul_dat, cim),
+constraint cs_ch check (zsebpenz>100));

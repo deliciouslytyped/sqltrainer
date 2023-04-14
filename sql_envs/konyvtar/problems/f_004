@@ -1,0 +1,7 @@
+4. Listázzuk ki a tagok nevét! A listát rendezzük név szerint!
+============
+order_matters=False
+============
+select vezeteknev ||' '|| keresztnev nev
+from konyvtar.tag
+order by nev;

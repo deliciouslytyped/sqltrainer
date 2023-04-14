@@ -1,0 +1,7 @@
+78. Az egyes témákhoz hány könyv tartozik?
+============
+order_matters=False
+============
+select tema, min(ar)
+from konyvtar.konyv
+group by tema;

@@ -1,0 +1,20 @@
+157. Keressük azokat a tagokat, akik nem kölcsönöztek.
+============
+order_matters=False
+============
+select *
+from konyvtar.tag ta
+where not exists (select 1
+from konyvtar.kolcsonzes ko
+where ta.olvasojegyszam =ko.tag_azon);
+------------
+select *
+from konyvtar.tag t
+where t.olvasojegyszam not in (select tag_azon
+from konyvtar.kolcsonzes);
+------------
+select t.olvasojegyszam, t.vezeteknev, t.keresztnev
+from konyvtar.tag t left outer join
+konyvtar.kolcsonzes ko
+on t.olvasojegyszam=ko.tag_azon
+where ko.leltari_szam is null;

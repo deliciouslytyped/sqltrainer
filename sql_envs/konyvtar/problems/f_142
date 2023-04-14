@@ -1,0 +1,8 @@
+142. Listázzuk ki az összes krimi témájú könyvet, és ha tartozik hozzájuk példány, akkor tegyük mellé a leltári számát.
+============
+order_matters=False
+============
+select kv.konyv_azon, cim, kk.leltari_szam
+from konyvtar.konyv kv left outer join konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+where kv.tema='krimi';

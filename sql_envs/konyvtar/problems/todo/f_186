@@ -1,0 +1,6 @@
+186. Nevezzük át a személy tábla cs_ch nevû megszorítását sz_ck-ra!
+============
+order_matters=False
+============
+alter table szemely
+rename constraint cs_ch to sz_ck;

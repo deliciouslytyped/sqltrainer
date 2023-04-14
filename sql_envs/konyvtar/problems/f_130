@@ -1,0 +1,9 @@
+130. Kik azok a tagok , akik egy példányt legalább kétszer kölcsönöztek ki?
+============
+order_matters=False
+============
+select tag_azon, tg.vezeteknev, tg.keresztnev
+from konyvtar.kolcsonzes ko inner join konyvtar.tag tg
+on ko.tag_azon=tg.olvasojegyszam
+group by tag_azon, leltari_szam , tg.vezeteknev, tg.keresztnev
+having count(kolcsonzesi_datum)>1

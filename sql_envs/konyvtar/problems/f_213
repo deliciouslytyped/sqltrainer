@@ -1,0 +1,19 @@
+213. Móra Ferenc megírja az a könyvet, amelyikhez a legtöbb példány van. Szúrjunk be ennek megfelelõen egy sort a könyvszerzõ táblába.
+============
+order_matters=False
+============
+insert into konyvszerzo (szerzo_azon, konyv_azon)
+select szerzo_azon, ko.konyv_azon
+from konyvtar.szerzo,
+konyvtar.konyv ko left outer join
+konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+where vezeteknev='Mó
+ra' and keresztnev='Ferenc'
+group by ko.konyv_azon, szerzo_azon
+having count(kk.leltari_szam)=(select max(count(leltari_szam))
+from konyvtar.konyv ko left outer join
+konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+group by ko.konyv_azon);
+commit;

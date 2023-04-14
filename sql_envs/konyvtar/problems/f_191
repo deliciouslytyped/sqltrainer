@@ -1,0 +1,6 @@
+191. Legyen az azon oszlop a bicikli tábla elsõdleges kulcsa!
+============
+order_matters=False
+============
+alter table bicikli
+add constraint bi_pk primary key (azon);

@@ -1,0 +1,10 @@
+194. Hozzunk létre nézete, amely a horror, sci-fi, krimi témájú könyvek címét, leltári számát és oldalankénti árát listázza.
+============
+order_matters=False
+============
+create view v_felos_konyvek as
+select cim, leltari_szam, ar/oldalszam ar_per_oldalszam
+from konyvtar.konyv ko inner join
+konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+where tema in ('krimi','sci-fi','horror');

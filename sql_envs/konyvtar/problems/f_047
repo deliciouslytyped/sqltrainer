@@ -1,0 +1,6 @@
+47. Hány nap telt el 2000 január 1 óta?
+============
+order_matters=False
+============
+select sysdate-to_date('2000.01.01','yyyy.mm.dd')
+from dual;

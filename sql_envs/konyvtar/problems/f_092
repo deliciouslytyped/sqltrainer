@@ -1,0 +1,7 @@
+92. Könyvazonosítónként mi a legnagyobb értéke a példányoknak?
+============
+order_matters=False
+============
+select konyv_azon, max(ertek)
+from konyvtar.konyvtari_konyv
+group by konyv_azon;

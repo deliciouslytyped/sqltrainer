@@ -1,0 +1,18 @@
+210. A legidõsebb tag ma kikölcsönözte a Napóleon címû könyvhöz tartozó legdrágább példányt (mivel két Napóleon van, ezért mindkettõhöz egy-egy példányt). Vegyük fel a megfelelõ sort a kölcsönzés táblába.
+============
+order_matters=False
+============
+insert into kolcsonzes(kolcsonzesi_datum, tag_azon, leltari_szam)
+select sysdate, olvasojegyszam, leltari_szam
+from konyvtar.tag, konyvtar.konyvtari_konyv
+where szuletesi_datum=(select min(szuletesi_datum)
+from konyvtar.tag)
+and konyv_azon in (select konyv_azon
+from konyvtar.konyv
+and (ertek, konyv_azon) in (select max(ertek), konyv_azon
+from konyvtar.konyvtari_konyv
+where konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where cim='Napóleon')
+group by konyv_azon) ;
+commit;

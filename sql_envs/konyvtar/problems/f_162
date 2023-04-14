@@ -1,0 +1,10 @@
+162. Melyik az a séma, amely a legtöbb táblát tartalmazza (amelyekre van valamilyen jogunk)?
+============
+order_matters=False
+============
+select owner, count(*)
+from all_tables
+group by owner
+having count(*)=(select max(count(*))
+from all_tables
+group by owner);

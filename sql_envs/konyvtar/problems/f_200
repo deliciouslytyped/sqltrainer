@@ -1,0 +1,10 @@
+200. Azokhoz könyvekhez kapcsolódó honoráriumot növeljük meg 10%-kal, amelyeknek az oldalankénti ára több, mint 20.
+============
+order_matters=False
+============
+update konyvszerzo
+set honorarium =honorarium*1.1
+where konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where ar/oldalszam>20);
+commit;

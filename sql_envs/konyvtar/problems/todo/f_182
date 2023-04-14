@@ -1,0 +1,6 @@
+182. Adjuk a bicikli táblához új oszlopot tipus névvel és maximum 30 hosszú változó hosszúságú karaktersorozattal.
+============
+order_matters=False
+============
+alter table bicikli
+add (tipus varchar2(30));

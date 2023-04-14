@@ -1,0 +1,8 @@
+124. Listázzuk ki, hogy az egyes tagok hány könyvtári könyvet kölcsönöztek ki. Csak azokat a tagokat listázzuk, akik kölcsönöztek könyvet.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, count(*), tg.olvasojegyszam
+from konyvtar.tag tg inner join konyvtar.kolcsonzes ko
+on tg.olvasojegyszam=ko.tag_azon
+group by vezeteknev, keresztnev, tg.olvasojegyszam;

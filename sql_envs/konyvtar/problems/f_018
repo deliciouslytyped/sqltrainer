@@ -1,0 +1,9 @@
+18. Keressük azoknak a könyveknek a címét és árát, amelyeknek az ára nem nagyobb vagy egyenlõ, mint ezer. A listát rendezzük ár, azon belül cím szerint.
+select ar, cim
+from konyvtar.konyv
+where not (ar >=1000)
+order by ar, cim;
+============
+order_matters=False
+============
+

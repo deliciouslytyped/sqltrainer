@@ -1,0 +1,6 @@
+32. Listázzuk ki, hogy az 'almafa' sztringben az 'af' sztring hányadik karaktertõl kezdõdik!
+============
+order_matters=False
+============
+select instr('almafa','af')
+from dual;

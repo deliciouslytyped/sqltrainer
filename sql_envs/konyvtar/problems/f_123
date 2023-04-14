@@ -1,0 +1,8 @@
+123. Az egyes szerzõk hány könyvet írtak? Csak azokat a szerzõket listázzuk, akik írtak könyvet.
+============
+order_matters=False
+============
+select sz.szerzo_azon, sz.vezeteknev, sz.keresztnev, count(*)
+from konyvtar.szerzo sz inner join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon, sz.vezeteknev, sz.keresztnev;

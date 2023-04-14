@@ -1,0 +1,9 @@
+199. Töröljük azokat a konyvtari_konyveket, amelyeket nem kölcsönöztek ki.
+============
+order_matters=False
+============
+delete
+from konyvtari_konyv
+where leltari_szam not in (select leltari_szam
+from konyvtar.kolcsonzes);
+commit;

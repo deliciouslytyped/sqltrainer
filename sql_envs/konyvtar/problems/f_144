@@ -1,0 +1,12 @@
+144. Mely könyvek valamely példányát kölcsönözték ki 3-nál kevesebbszer?
+============
+order_matters=False
+============
+select kv.konyv_azon, cim, count(kolcsonzesi_datum)
+from konyvtar.konyv kv inner join konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+left outer join
+konyvtar.kolcsonzes ko
+on kk.leltari_szam=ko.leltari_szam
+group by kv.konyv_azon, cim
+having count(kolcsonzesi_datum)<3;

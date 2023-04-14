@@ -1,0 +1,9 @@
+102. Mi a leltári száma az Ácsi Milán nevû tag aktuálisan kikölcsönzött könyveinek?
+============
+order_matters=False
+============
+select leltari_szam
+from konyvtar.tag tag inner join konyvtar.kolcsonzes kl
+on tag.olvasojegyszam=kl.tag_azon
+where vezeteknev='Ácsi' and keresztnev='Milán'
+and visszahozasi_datum is null;

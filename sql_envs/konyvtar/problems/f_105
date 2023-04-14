@@ -1,0 +1,11 @@
+105. Ki írta a Hasznos holmik címû könyvet?
+============
+order_matters=False
+============
+select vezeteknev, keresztnev
+from konyvtar.konyv kv inner join
+konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+inner join konyvtar.szerzo sz
+on ksz.szerzo_azon=sz.szerzo_azon
+where cim='Hasznos holmik';

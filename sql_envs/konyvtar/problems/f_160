@@ -1,0 +1,17 @@
+160. Az egyes szerzõk melyik könyvért kapták a legnagyobb honoráriumot?
+============
+order_matters=False
+============
+select sz.vezeteknev, sz.keresztnev, honorarium, ko.cim
+from konyvtar.szerzo sz left outer join
+konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+left outer join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon
+where (sz.szerzo_azon, nvl(honorarium,0)) in
+(select sz2.szerzo_azon, max(nvl(honorarium,0))
+from konyvtar.szerzo sz2 left outer join
+konyvtar.konyvszerzo ksz2
+on sz2.szerzo_azon=ksz2.szerzo_azon
+group by sz2.szerzo_azon)
+order by vezeteknev, keresztnev;

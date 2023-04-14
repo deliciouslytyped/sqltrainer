@@ -1,0 +1,9 @@
+169. Melyek azok a keresztnevek, amelyek valamelyik szerzõ keresztneve, de egyetlen tagé sem?
+============
+order_matters=False
+============
+select keresztnev
+from konyvtar.szerzo
+minus
+select keresztnev
+from konyvtar.tag;

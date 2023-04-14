@@ -1,0 +1,9 @@
+141. Az egyes könyvekhez hány könyvtári könyv tartozik?
+============
+order_matters=False
+============
+select kv.konyv_azon, cim, count(kk.leltari_szam), count(*)
+from konyvtar.konyv kv left outer join
+konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+group by kv.konyv_azon, cim;

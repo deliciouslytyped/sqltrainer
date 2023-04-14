@@ -1,0 +1,9 @@
+198. Töröljük azokat a könyveket, amelyekhez nincs példány.
+============
+order_matters=False
+============
+delete
+from konyv
+where konyv_azon not in (select konyv_azon
+from konyvtar.konyvtari_konyv);
+commit;

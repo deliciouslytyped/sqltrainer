@@ -1,0 +1,7 @@
+177. Listázzuk ki a személyek biciklijeit. A lista tartalmazza azokat a személyeket is, akiknek nincs biciklijük, és azokat a bicikliket is, amelyeknek nincs tulajdonosuk.
+============
+order_matters=False
+============
+select *
+from bicikli bi full outer join szemely sz
+on bi.tulaj_azon=sz.azon;

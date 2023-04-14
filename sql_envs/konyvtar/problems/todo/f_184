@@ -1,0 +1,6 @@
+184. Nevezzük át a bicikli tábla tulaj_azon oszlopát t_azon-ra.
+============
+order_matters=False
+============
+alter table bicikli
+rename column tulaj_azon to t_azon;

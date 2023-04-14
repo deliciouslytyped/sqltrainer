@@ -1,0 +1,9 @@
+153. A krimi témájú könyvekbõl melyik a legdrágább?
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where tema='krimi' and ar=(select max(ar)
+from konyvtar.konyv
+where tema='krimi');

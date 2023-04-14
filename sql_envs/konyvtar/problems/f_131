@@ -1,0 +1,10 @@
+131. Ki írta a Napóleon címû könyvet?
+============
+order_matters=False
+============
+select vezeteknev, keresztnev
+from konyvtar.szerzo sz inner join konyvtar. konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon
+where cim='Napóleon';

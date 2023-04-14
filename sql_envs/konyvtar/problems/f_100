@@ -1,0 +1,7 @@
+100. A besorolásonkénti össztagszámnak mennyi az átlaga?
+============
+order_matters=False
+============
+select avg(count(olvasojegyszam))
+from konyvtar.tag
+group by besorolas;

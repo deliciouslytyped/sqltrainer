@@ -1,0 +1,7 @@
+90. Besorolásonként és nemenként mennyi az átlagos tagdíj és a tagok száma?
+============
+order_matters=False
+============
+select besorolas, nem, avg(tagdij), count(*)
+from konyvtar.tag
+group by besorolas, nem;

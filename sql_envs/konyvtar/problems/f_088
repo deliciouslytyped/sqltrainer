@@ -1,0 +1,7 @@
+88. Kiadónként mi a legutolsó kiadás dátuma?
+============
+order_matters=False
+============
+select kiado, to_char(max(kiadas_datuma),'yyyy.mm.dd')
+from konyvtar.konyv
+group by kiado;

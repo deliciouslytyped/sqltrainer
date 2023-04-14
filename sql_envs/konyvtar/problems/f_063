@@ -1,0 +1,8 @@
+63. Hány darab olyan könyv van, amelyiknek a címe pontosan kettõ 'a' betût (mindegy, hogy kicsi vagy nagy) tartalmaz?
+============
+order_matters=False
+============
+select count(*)
+from konyvtar.konyv
+where lower(cim) like '%a%a%'
+and lower(cim) not like '%a%a%a%';

@@ -1,0 +1,9 @@
+121. Mely szerzõknek nagyobb az összhonoráriuma 1 milliónál?
+============
+order_matters=False
+============
+select sz.szerzo_azon, sz.vezeteknev, sz.keresztnev, sum(honorarium)
+from konyvtar.szerzo sz inner join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon, sz.vezeteknev, sz.keresztnev
+having sum(honorarium)>1000000;

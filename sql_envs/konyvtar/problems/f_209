@@ -1,0 +1,12 @@
+209. Töröljük azokat a könyveket, amelyekhez nem tartozik konyvszerzo, és nem tartozik konyvtari_konyv, és 5000-nél olcsóbbak vagy nincs áruk.
+============
+order_matters=False
+============
+delete
+from konyv
+where konyv_azon not in (select konyv_azon
+from konyvtar.konyvszerzo)
+and konyv_azon not in (select konyv_azon
+from konyvtar.konyvtari_konyv)
+and (ar is null or ar<5000);
+commit;

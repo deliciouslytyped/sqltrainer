@@ -1,0 +1,9 @@
+80. Városonként hány olyan tag van, aki 1980.03.01 elõtt született?
+============
+order_matters=False
+============
+select substr(cim, 6,instr(cim,',')-6) varos, count(*)
+from konyvtar.tag
+where szuletesi_datum<to_date('1980.03.01','yyyy.mm.dd')
+group by substr(cim, 6,instr(cim,',')-6)
+order by varos;

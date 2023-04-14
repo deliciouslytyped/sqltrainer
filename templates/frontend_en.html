@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!--
+TODO: input, feladat select,
+table display, diff
+sql fiddle scripts?
+browser compat note
+static output version
+
+responsive design or whatever
+
+settings anchor should drop the cursor in the setting box?
+
+dark mode
+
+get some icons for the problems on each schema
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<form method="post">
+    <div id="head" class="section-block">
+        <div class="cheshire">
+            <img src="static/cheshire.png"><br>
+            <i>[We're all mad here...]</i>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <span id="top"></span>
+        <h1>SQL Trainer</h1>
+        <a href="#tutorial">[Tutorial]</a><a href="#manual">[MANUAL]</a><a href="#settings">[Settings]</a><br>
+        <br>
+        <span class="unattempted">[unattempted]</span><span class="correct">[correct]</span><span class="wrong">[wrong]</span>
+        <br>
+        {% for problemset in problemsets %}
+            <p><a href="#{{ problemset[0] }}_schema"><strong>{{ problemset[0] }}</strong> schema</a> problem set:</p>
+            {% for subset in problemset[1] %}
+                <span class="problem-category pad-left-4 negindent paragraphs">{{ subset[0] }}:
+                <br>
+                    {% for problem in subset[1] %}
+                        <a class="{{ session["problemstate"][problemset[0]][problem[0]] }}" href="#{{ problemset[0] }}_problem_{{ problem[0] }}">[{{ problem[0] }}]</a>{% endfor %}
+                </span>
+                <br>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="category-block">
+        <span id="manual"></span>
+        <h2><a href="#top">[top]</a> MANUAL</h2>
+    </div>
+
+    <div class="section-block">
+        <h2>What is this? / Study advice</h2>
+        <div class="paragraphs">
+            <p>This is a small application/worksheet for practicing Oracle SQL with the intent of deliberate practice.
+                Questions and answers are provided, but the answers are hidden by default so that you can try to solve
+                the problems by yourself first.</p>
+            <p>The goal of machine-checking is to provide you a playground for (also) attempting alternate solutions
+                where you can be sure your solution produces the same results as the reference solution, without having
+                to try to check the results by hand.</p>
+            <p>These questions and answers were originally presented sequentially as a pdf. This tool was created with
+            the intent of providing more result-based answer checking, but to make the most of these practice questions
+            you really have to do your best to think about what you are doing and why. You should also strongly consider
+            solving a set of problems purely with SQL Developer as well.</p>
+            <p>In actuality, you should probably be writing your code in SQL Developer, because there is no fancy
+            editing here, only text entry.</p>
+            <div>Some tips:
+                <ul>
+                    <li>TODO drag to fill (and single click mess thing)</li>
+                    <li>history</li>
+                    <li>nls settings</li>
+                    <li>generating diagrams (TODO note about bad diagram)</li>
+                    <li>todo</li>
+                </ul>
+            </div>
+            <p>The best thing is to go from top to bottom and do every problem. This will also familiarize you with, and
+                drill you on- the schema.</p>
+            <p>Basically, to git gud, do everything with everything on everything.</p>
+            <p>The first test can generally be finished in 40 of the 80 minutes if you are fluent in the SQL and are
+            familiar with the schema that has been assigned. Spend the rest of the time checking your answers.</p>
+
+            <h2>Test pitfalls / additional requirements</h2>
+            <p>"must be platform and environment independent" or something, not strictly true in some senses but</p>
+            <ul>
+                <li>monomorphising dates TODO (todo link to manual sections for the date handling stuff)</li>
+                <li>meaningful result column sets</li>
+                <li>what else??</li>
+            </ul>
+
+            <p>sql developer used to hang for some kind of server misconfigurtion or otherwise reason, it doesnt
+            anymore but ive built up the reflex of writing my sql in notepad++ (which will save your work automatically to a temporary file) and checking it in sqldeveloper,
+            the sqldeveloper autocomplete is crap and slow anyway* (*may be a configuration thing?) and once youve written
+            a bit of code in np++ the autocomplete of existing words there will work a lot better</p>
+
+            <p>TODO get some sample tests up here</p>
+
+            <h2>Resources:</h2>
+            <ul>
+                <li>eredeti feladatkiiras</li>
+                <li>ora21c sql manual (you should basically read through the first couple chapters, perhaps semi-targeted. its not that much?)</li>
+                <li>sql developer hash list / how to check hashes / no-login hotlinks</li>
+                <li>pano notes (second half), what for first half?</li>
+            </ul>
+
+            <h4>bonus material: (TODO password protected links)</h4>
+            <ul>
+                <li>pl sql manual</li>
+                <li>joe celko books</li>
+
+                <li>cj date and fabian pascal stuff and codd(?) and mcgoveran stuff</li>
+                <li>the mathy book</li>
+
+                <li>the three or however many db textbooks</li>
+
+                <li>the cmu db implementation lecture sets</li>
+
+                <li>widoms class is /ok/ i guess</li>
+            </ul>
+
+            <h2>How to read SQL Developer schema diagrams</h2>
+            TODO
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>How to use this tool:</h2>
+        All SQL queries are run under your database user. This requires you to enter your login credentials in the
+        <a href="#settings">settings</a> section of the page.
+
+        <h2>Saving your game:</h2>
+
+        <h2>Tool Caveats:</h2>
+        <div class="paragraphs">
+            <p>This is meant as a practice environment. Due to implementation details (TODO mention) in which the backend
+                transforms user submitted SQL queries, some queries may break. The specific transformations are esentially
+                related to an emulated table namespacing implementation based on prefixing table names in the database
+                and in SQL statements.</p>
+            <p>Select statements should generally work. Anything else may or may not break. The environment is not meant to
+                be robust to rough treatment.</p>
+            <p>Currently many checks are unimplemented. Among other things, DDL table constraints are not checked properly.</p>
+            <p>See the many TODO comments in the source-code for additional nonsensical information.</p>
+        </div>
+
+        <h2>Troubleshooting:</h2>
+
+        <h2>Bugs/Source:</h2>
+        Bug reports, issues, and pull requests can be filed at <a href="https://github.com/deliciouslytyped/sqltrainer">https://github.com/deliciouslytyped/sqltrainer</a><br>
+        The code is currently <span class="prealpha">PRE-ALPHA</span> category.
+    </div>
+
+    <div id="tutorial" class="category-block">
+        <h2><a href="#top">[top]</a> Tool Tutorial</h2>
+    </div>
+
+    <div class="section-block">
+        <a href="#top">[top]</a><br>
+        <h3>Tutorial</h3>
+        <ol start="0">
+            <li> Go <a href="#manual">back</a> and read the manual.</li>
+            <li> Fill out your login information in the <a href="#settings">settings</a> section.</li>
+            <li> Enter some sql in the textarea below.</li>
+            <li> Click the green Run SQL button.</li>
+        </ol>
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="tutorial_1">{{ session["savedstate"]["tutorial_1"] }}</textarea>
+        <br>
+        <button type="submit" formaction="/#tutorial">Run SQL</button>
+    </div>
+
+    <div id="settings" class="category-block">
+        <h2><a href="#top">[top]</a> Settings</h2>
+    </div>
+
+    <div class="section-block">
+        TODO autofill behaviour?<br>
+        This application runs SQL using your credentials on the SQL server:<br>
+        <label for="user">Username:</label> <input name="user" type="text" value="{{ session["savedstate"]["user"] }}"><br>
+        <label for="pass">Password:</label> <input name="pass" type="password" value="{{ session["savedstate"]["pass"] }}"><br>
+        <!-- TODO: clear button -->
+        <br>
+        <br>
+        Session configuration code. (This is run whenever a session needs to be initialized. You don't need to do anything.)
+        <br>
+        <textarea placeholder="Input Oracle 21c SQL here." name="session_sql">{{ session["savedstate"]["sessionsql"] }}</textarea>
+        <br>
+        <p>This button will remove all tables prefixed with TODO in your schema/user, you must check the "Confirm" checkbox
+            for it to work:
+            <button name="clean_my_schema" class="data-loss">Clean my schema</button>
+            <label for="confirm_clean_my_schema">Confirm:</label><input id="confirm_1clean_my_schema" autocomplete="off" type="checkbox">
+        </p>
+    </div>
+
+    {% for problemset in problemsets %}
+    <div class="major-section">
+        <span id="{{ problemset[0] }}_schema"></span>
+        <h2><a href="#top">[top]</a> {{ problemset[0] }} Schema</h2>
+        {% for subset in problemset[1] %}
+            <span class="problem-category pad-left-4 negindent paragraphs">{{ subset[0] }}:
+            <br>
+                {% for problem in subset[1] %}
+                    <a class="{{ session["problemstate"][problemset[0]][problem[0]] }}" href="#{{ problemset[0] }}_problem_{{ problem[0] }}">[{{ problem[0] }}]</a>{% endfor %}
+            </span>
+            <br>
+        {% endfor %}
+        <br>
+        {# TODO dont know why the first click causes the page to jump #}
+        <input id="pin_schema_{{ problemset[0] }}" type="radio" name="pin_schema_{{ problemset[0] }}" value="pin" {% if session["savedstate"][problemset[0]]["pinschema"] == "pin" %}checked{% endif %}>
+        <label for="pin_schema_{{ problemset[0] }}" class="pinschema">Pin schema</label>
+        <label for="pin_schema_{{ problemset[0] }}_hide2" class="radiohack unpinschema">Unpin schema</label>
+        <input id="pin_schema_{{ problemset[0] }}_hide2" type="radio" name="pin_schema_{{ problemset[0] }}" value="hide2" {% if session["savedstate"][problemset[0]]["pinschema"] == "hide2" %}checked{% endif %}>
+        <br>
+        <div id="pin_schema_block_{{ problemset[0] }}" class="pinschemablock">
+            <label for="pin_schema_{{ problemset[0] }}_hide1" class="closebutton">[X]</label><br>
+            <input class="dispnone" id="pin_schema_{{ problemset[0] }}_hide1" type="radio" name="pin_schema_{{ problemset[0] }}" value="hide1" {% if session["savedstate"][problemset[0]]["pinschema"] == "hide1" %}checked{% endif %}>
+            <img src="static/{{ problemset[0].lower() }}_sema.png">
+        </div>
+        <a href="static/{{ problemset[0].lower() }}_sema.png" target="_blank">
+            <img src="static/{{ problemset[0].lower() }}_sema.png">
+        </a>
+    </div>
+
+    {% for subset in problemset[1] %}
+        <div class="category-block">
+            <h2><a href="#top">[top]</a> {{ subset[0] }}</h2>
+        </div>
+
+        {% for problem in subset[1] %}
+            <div id="{{ problemset[0] }}_problem_{{ problem[0] }}" class="section-block {{ session["problemstate"][problemset[0]][problem[0]] }}-border">
+                {# TODO make the ^ v buttons work in global scope #}
+                <a href="#top">[top]</a><a href="#{{ problemset[0] }}_schema">[schema]</a><a class="{% if loop.first %}hidden{% endif %}" href="#{{ problemset[0] }}_problem_{{ problem[0] - 1 }}">[^]</a><a class="{% if loop.last %}hidden{% endif %}" href="#{{ problemset[0] }}_problem_{{ problem[0] + 1 }}">[v]</a><br>
+                <div class="paragraphs">
+                <span class="negindent">
+                <h3>{{ problem[0] }}.</h3>
+                    {% for line in problem[1] %}
+                        {# todo this is a bit of a hack for some of the table creation problems #}
+                        {% if loop.first %}
+                            {{ line }}
+                        {% elif loop.last %}
+                            {{ line }}
+                        {% else %}
+                            <span class="pad-left-4 dispinlineblock">
+                            {{ line }}
+                            </span>
+                        {% endif %}
+                        <br>
+                    {% endfor %}
+                </span>
+                </div>
+                <br>
+                <textarea rows="5" cols="80" placeholder="Input Oracle 21c SQL here." name="{{ problemset[0] }}_problem_{{ problem[0] }}_sql">{{ session["savedstate"][problemset[0]][problem[0]|string]["mysolution"] }}</textarea>
+                <br>
+                <button type="submit" name="{{ problemset[0] }}_problem_{{ problem[0] }}_button" formaction="/#{{ problemset[0] }}_problem_{{ problem[0] }}">Run SQL</button>
+                <!-- Note the label needs to be after the input for css hacks, though doing this kind of thing is bad for accessibility and technically we should just bite the JS bullet and use a real button -->
+                <input id="{{ problemset[0] }}_{{ problem[0] }}_show_ans" name="{{ problemset[0] }}_{{ problem[0] }}_show_ans" type="checkbox" class="dispnone" {{ session["savedstate"][problemset[0]][problem[0]|string]["show_ans"] }}><label class="fakebutton" for="{{ problemset[0] }}_{{ problem[0] }}_show_ans">answer(s)</label>
+                <br>
+                <div id="{{ problemset[0] }}_{{ problem[0] }}_ans" class="dispnone">
+                    {% for solution in problem[2] %}
+                        {# TODO nice size somehow  #}
+                        <textarea rows="{{ solution|length }}" cols="{{ solution|map("length")|max }}">{{ solution|join("\n") }}</textarea><br>{% endfor %}
+                </div>
+                <div class="resultarea">
+                    {# {% if problem[0]|string in g.savedresults %}<textarea rows="8" cols="{{ g.savedresults_maxlen[problem[0]|string] }}">{% for row in g.savedresults[problem[0]|string] %}{{ row|join(",") + "\n" }}{% endfor %}</textarea>{% endif %} #}
+                    {% if problem[0] in g.savedresults %}<textarea rows="8" cols="{{ g.savedresults_maxlen[problem[0]] }}">{{ g.savedresults[problem[0]] }}</textarea>{% endif %}
+                </div>
+            </div>
+{#
+            <div id="{{ problemset[0] }}_problem_3" class="section-block">
+                <a href="#top">[top]</a><a href="#{{ problemset[0] }}_schema">[schema]</a><a href="#{{ problemset[0] }}_problem_2">[^]</a><a class="hidden" href="#">[v]</a><br>
+                <div class="paragraphs negindent">
+                <h3>3.</h3>
+                    Hozzunk létre táblát szemely néven a következő oszlopokkal:<br>
+                        <span class="negindent">azon: max. 5 számjegyű egész szám,</span><br>
+                        <span class="negindent">nev: maximum 30 hosszú változó hosszúságú karaktersorozat, amelyet ki kell tölteni,</span><br>
+                        <span class="negindent">szul_dat: dátum típusú,</span><br>
+                        <span class="negindent">irsz: pontosan 4 karakter hosszú sztring,</span><br>
+                        <span class="negindent">cim: maximum 40 hosszú változó hosszúságú karaktersorozat,</span><br>
+                        <span class="negindent">zsebpenz: szám, amelynek maximum 12 számjegye lehet, amelyből az utolsó kettő a tizedesvessző után áll.</span><br>
+                </div>
+                <br>
+                <div class="paragraphs">
+                    A tábla elsődleges kulcsa az azon oszlop legyen. A nev, szul_dat, cim együtt legyen egyedi. A zsebpenz, ha ki van töltve, legyen nagyobb, mint 100.
+                </div>
+
+                <br>
+                <textarea placeholder="Input Oracle 21c SQL here." name="{{ problemset[0] }}_problem_3_sql"></textarea>
+                <br>
+                <button type="submit" name="{{ problemset[0] }}_problem_3_button">Submit</button>
+                <!-- Note the label needs to be after the input for css hacks, though doing this kind of thing is bad for accessibility and technically we should just bite the JS bullet and use a real button -->
+                <input id="{{ problemset[0] }}_3_show_ans" type="checkbox" class="dispnone"><label class="fakebutton" for="{{ problemset[0] }}_3_show_ans">answer(s)</label>
+                <br>
+                <div id="{{ problemset[0] }}_3_ans" class="dispnone">
+    <textarea>create table szemely
+    (azon number(5),
+    nev varchar2(30) not null,
+    szul_dat date,
+    irsz char(4),
+    cim varchar2(40),
+    zsebpenz number(12,2),
+    constraint sz_pk primary key (azon),
+    constraint sz_uq unique (nev, szul_dat, cim),
+    constraint cs_ch check (zsebpenz>100));
+    </textarea>
+                </div>
+            </div>
+#}
+        {% endfor %}
+    {% endfor %}
+    {% endfor %}
+
+    <div class="vfill section-block">
+        vfill
+    </div>
+</form>
+</body>
+</html>

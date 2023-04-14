@@ -1,0 +1,16 @@
+212. Módosítsuk a kölcsönzés táblát a diákok esetén: a visszahozási dátum legyen kölcsönzési dátum megnövelve annyi nappal ahány évesek, a késedelmi díjat növeljük a könyv értékének a felével (ha null érték volt, akkor könyv értékének a fele legyen)!
+============
+order_matters=False
+============
+update kolcsonzes ko
+set visszahozasi_datum=kolcsonzesi_datum+
+(select sysdate-szuletesi_datum
+from konyvtar.tag
+where ko.tag_azon=olvasojegyszam),
+kesedelmi_dij=nvl(kesedelmi_dij,0)+(select nvl(ertek,0)/2
+from konyvtar.konyvtari_konyv kk
+where ko.leltari_szam=kk.leltari_szam)
+where tag_azon in (select olvasojegyszam
+from konyvtar.tag
+where besorolas='diák');
+commit;

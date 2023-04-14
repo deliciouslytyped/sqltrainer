@@ -1,0 +1,8 @@
+110. Mi a szerzõ azonosítója a Tíz kicsi néger szerzõjének?
+============
+order_matters=False
+============
+select szerzo_azon
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+where cim='Tíz kicsi néger';

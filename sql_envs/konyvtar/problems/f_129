@@ -1,0 +1,8 @@
+129. Kik azok a tagok (tag_azon), akik egy példányt legalább kétszer kölcsönöztek ki?
+============
+order_matters=False
+============
+select tag_azon
+from konyvtar.kolcsonzes
+group by tag_azon, leltari_szam
+having count(kolcsonzesi_datum)>1;

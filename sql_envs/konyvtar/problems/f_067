@@ -1,0 +1,7 @@
+67. Mi a horror, sci-fi, krimi témájú könyvek közül a legdrágábbbnak az ára?
+============
+order_matters=False
+============
+select max(ar)
+from konyvtar.konyv
+where tema in ('horror', 'sci-fi', 'krimi');

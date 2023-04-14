@@ -1,0 +1,8 @@
+65. Mi a témája azoknak a könyveknek, amelyeknek az oldalankéti ára 10 és 150 között van. Minden téma csak egyszer szerepeljen, és legyen a lista rendezett.
+============
+order_matters=False
+============
+select distinct tema
+from konyvtar.konyv
+where ar/oldalszam between 10 and 150
+order by tema;

@@ -1,0 +1,7 @@
+58. Hány darab 70 évnél idõsebb szerzõ van?
+============
+order_matters=False
+============
+select count(*)
+from konyvtar.szerzo
+where months_between(sysdate, szuletesi_datum)/12>70;

@@ -1,0 +1,8 @@
+116. Írjuk ki az IT_PROG job_id-jú dolgozók fõnökének a nevét. Használjuk a HR sémát.
+============
+order_matters=False
+============
+select distinct fonok.first_name, fonok.last_name
+from hr.employees it inner join hr.employees fonok
+on it.manager_id=fonok.employee_id
+where it.job_id='IT_PROG';

@@ -1,0 +1,11 @@
+165. Kérdezzük le azoknak a szerzõknek a nevét, akik benne vannak abban a listában, akik a 10 legnagyobb honoráriumot kapták.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev
+from konyvtar.szerzo
+where szerzo_azon in (select szerzo_azon
+from (select *
+from konyvtar.konyvszerzo
+order by honorarium desc nulls last)
+where rownum<11);

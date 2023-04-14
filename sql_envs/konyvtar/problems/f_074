@@ -1,0 +1,6 @@
+74. Mi a legutolsó kiadás dátuma?
+============
+order_matters=False
+============
+select to_char(max(kiadas_datuma),'yyyy.mm.dd')
+from konyvtar.konyv;

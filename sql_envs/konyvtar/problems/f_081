@@ -1,0 +1,8 @@
+81. Melyik szerzo (csak szerzo_azon) összhonoráriuma nagyobb, mint 2000000?
+============
+order_matters=False
+============
+select szerzo_azon, sum(honorarium)
+from konyvtar.konyvszerzo
+group by szerzo_azon
+having sum(honorarium)>2000000;

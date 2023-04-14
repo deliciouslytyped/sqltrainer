@@ -1,0 +1,21 @@
+150. Témánként mi a legdrágább árú könyv címe?
+============
+order_matters=False
+============
+select ko.tema, cim
+from konyvtar.konyv ko inner join (select tema, max(ar) mar
+from konyvtar.konyv
+group by tema) m
+on ko.tema=m.tema and ko.ar=m.mar;
+------------
+select tema, cim
+from konyvtar.konyv
+where (tema, ar) in (select tema, max(ar)
+from konyvtar.konyv
+group by tema);
+------------
+select tema, cim
+from konyvtar.konyv ko
+where ar=(select max(ar)
+from konyvtar.konyv belso
+where belso.tema=ko.tema)

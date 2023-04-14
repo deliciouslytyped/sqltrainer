@@ -1,0 +1,8 @@
+68. Mennyi a legkisebb oldalszámú könyv oldalszáma azok között a könyvek között, amelyeknek az ára 1000 és 5000 között van.
+============
+order_matters=False
+============
+select min(oldalszam)
+from konyvtar.konyv
+where ar
+between 1000 and 5000;

@@ -1,0 +1,10 @@
+127. Melyik könyvekre fizettek 1 milliónál több összhonoráriumot?
+============
+order_matters=False
+============
+select cim, kv.konyv_azon, sum(honorarium)
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+group by cim, kv.konyv_azon
+having sum(honorarium)>1000000
+order by cim;

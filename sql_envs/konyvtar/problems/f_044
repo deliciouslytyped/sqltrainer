@@ -1,0 +1,9 @@
+44. Írjuk ki a mai dátumot, a holnapi dátumot, az egy héttel ezelõtti dátumot és a 12 órával ezelõtti dátumot. A dátumok mellett az idõ is szerepeljen.
+============
+order_matters=False
+============
+select to_char(sysdate,'yyyy.mon dd hh24:mi:ss'),
+to_char(sysdate+1,'yyyy.mon dd hh24:mi:ss'),
+to_char(sysdate-7,'yyyy.mon dd hh24:mi:ss'),
+to_char(sysdate-1/2,'yyyy.mon dd hh24:mi:ss')
+from dual;

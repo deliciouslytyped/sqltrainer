@@ -1,0 +1,7 @@
+Listázzuk ki a tagokat!
+#Mj: from konytar.* nem jo mert az adatbazis ertekek valtoznak az ujrageneralassal (TODO set seed?)
+============
+order_matters=False
+============
+select *
+from tag

@@ -1,0 +1,8 @@
+7. Listázzuk ki a nõi tagokat! A listát rendezzük név szerint!
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where nem='n'
+order by vezeteknev, keresztnev;

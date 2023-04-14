@@ -1,0 +1,7 @@
+6. Listázzuk ki a könyveket. A lista legyen ar szerint csökkenõen rendezett, és a null értékek a végén szerepeljenek.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+order by ar desc nulls last;

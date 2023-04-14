@@ -1,0 +1,7 @@
+14. Listázzuk ki azokat a tagokat, akiknek a tagdíja több, mint 1000 vagy a besorolása felnõtt!
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where tagdij>1000 or besorolas='felnõtt';

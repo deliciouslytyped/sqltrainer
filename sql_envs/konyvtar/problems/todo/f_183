@@ -1,0 +1,6 @@
+183. Dobjuk el a bicikli tábla tipus oszlopát!
+============
+order_matters=False
+============
+alter table bicikli
+drop column tipus;

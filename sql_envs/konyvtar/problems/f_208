@@ -1,0 +1,10 @@
+208. Töröljük azokat a könyszerzõbeli sorokat, amelyek esetén a honorárium kisebb, mint a hozzá kapcsolódó könyv árának a 10-szerese.
+============
+order_matters=False
+============
+delete
+from konyvszerzo ksz
+where honorarium<(select ar*10
+from konyvtar.konyv ko
+where ksz.konyv_azon=ko.konyv_azon);
+commit;

@@ -1,0 +1,6 @@
+30. Mennyi 12*50 és 25-nek a gyöke?
+============
+order_matters=False
+============
+select 12*50, sqrt(25)
+from dual;

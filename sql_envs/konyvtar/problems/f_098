@@ -1,0 +1,8 @@
+98. Melyik kiadó adott ki annyi könyvet, amelynek az összoldalszáma több, mint 500?
+============
+order_matters=False
+============
+select kiado
+from konyvtar.konyv
+group by kiado
+having sum(oldalszam)>500;

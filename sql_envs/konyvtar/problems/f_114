@@ -1,0 +1,13 @@
+114. Kik azok a tagok, akik ugyanabban a városban születtek, mint Agyalá Gyula?
+============
+order_matters=False
+============
+select tobbi.vezeteknev, tobbi.keresztnev, tobbi.OLVASOJEGYSZAM
+from konyvtar.tag agygy, konyvtar.tag tobbi
+where agygy.vezeteknev='Agyalá' and agygy.keresztnev='Gyula'
+and substr(agygy.cim,6, instr(agygy.cim, ',')-6)=substr(tobbi.cim,6, instr(tobbi.cim, ',')-6);
+------------
+select tobbi.vezeteknev, tobbi.keresztnev, tobbi.OLVASOJEGYSZAM
+from konyvtar.tag agygy inner join konyvtar.tag tobbi
+on substr(agygy.cim,6, instr(agygy.cim, ',')-6)=substr(tobbi.cim,6, instr(tobbi.cim, ',')-6)
+where agygy.vezeteknev='Agyalá' and agygy.keresztnev='Gyula';

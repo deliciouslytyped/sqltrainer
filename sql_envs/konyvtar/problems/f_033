@@ -1,0 +1,6 @@
+33. Listázzuk ki a tagok nevét és nemét. Az utolsó oszlopon szerepeljen a 'férfi' karaktersorozat, ha a nem 'f', a 'nõ', ha a nem 'n', és '?' egyébként.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, nem, decode(nem,'f','férfi','n','nõ','?')
+from konyvtar.tag;

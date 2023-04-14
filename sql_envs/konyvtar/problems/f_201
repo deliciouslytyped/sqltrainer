@@ -1,0 +1,15 @@
+201. Növeljük meg a honoráriumot a könyv árának a felével azon írások esetén, ahol a szerzõ 1900 után születtek és a könyv kiadójának a nevében szerepel a KIADÓ szó.
+============
+order_matters=False
+============
+update konyvszerzo ksz
+set honorarium=honorarium+(select ar/2
+from konyvtar.konyv ko
+where ko.konyv_azon=ksz.konyv_azon)
+where konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where kiado like '%KIADÓ%')
+and szerzo_azon in (select szerzo_azon
+from konyvtar.szerzo
+where szuletesi_datum>to_date('1900','yyyy'));
+commit;

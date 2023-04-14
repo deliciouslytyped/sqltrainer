@@ -1,0 +1,17 @@
+113. Melyik olvasó fiatalabb Agatha Christie írótól?
+============
+order_matters=False
+============
+select to_char(sz.szuletesi_datum,'yyyy.mm.dd'), to_char(t.szuletesi_datum,'yyyy.mm.dd'),
+t.vezeteknev, t.keresztnev, t.olvasojegyszam
+from konyvtar.szerzo sz, konyvtar.tag t
+where sz.vezeteknev='Christie'
+and sz.keresztnev='Agatha'
+and sz.szuletesi_datum<t.szuletesi_datum;
+------------
+select to_char(sz.szuletesi_datum,'yyyy.mm.dd'), to_char(t.szuletesi_datum,'yyyy.mm.dd'),
+t.vezeteknev, t.keresztnev, t.olvasojegyszam
+from konyvtar.szerzo sz inner join konyvtar.tag t
+on sz.szuletesi_datum<t.szuletesi_datum
+where sz.vezeteknev='Christie'
+and sz.keresztnev='Agatha';

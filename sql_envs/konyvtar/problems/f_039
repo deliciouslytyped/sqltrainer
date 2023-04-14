@@ -1,0 +1,6 @@
+39. Listázzuk ki a tagok vezetéknevét, majd a tagok nevét csupa kisbetûvel, és csupa nagybetûvel!
+============
+order_matters=False
+============
+select vezeteknev, lower(vezeteknev), upper(vezeteknev)
+from konyvtar.tag;

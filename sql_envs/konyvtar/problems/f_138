@@ -1,0 +1,9 @@
+138. Listázzuk témánként a horror, sci-fi, krimi témájú könyvekért kapott összhonoráriumot!
+============
+order_matters=False
+============
+select tema, sum(nvl(honorarium,0))
+from konyvtar.konyv ko left outer join konyvtar.konyvszerzo ksz
+on ko.konyv_azon=ksz.konyv_azon
+where tema in ('horror', 'sci-fi', 'krimi')
+group by tema;

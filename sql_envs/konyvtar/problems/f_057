@@ -1,0 +1,6 @@
+57. Hány téma van?
+============
+order_matters=False
+============
+select count(tema)
+from konyvtar.konyv;

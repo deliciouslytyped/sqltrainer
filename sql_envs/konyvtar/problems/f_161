@@ -1,0 +1,13 @@
+161. Melyek azok a könyvek, amelyek az átlagos árú könyvektõl olcsóbbak és amelyeket Móra Ferenc szerzõ írt?
+============
+order_matters=False
+============
+select cim, ar
+from konyvtar.szerzo sz inner join
+konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon
+where ar<(select avg(ar) from konyvtar.konyv)
+and vezeteknev='Móra'
+and keresztnev='Ferenc';

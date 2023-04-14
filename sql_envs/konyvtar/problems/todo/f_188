@@ -1,0 +1,6 @@
+188. Dobjuk el a sz_uq nevû megszorítást a személy2 tábláról.
+============
+order_matters=False
+============
+alter table szemely2
+drop constraint sz_uq;

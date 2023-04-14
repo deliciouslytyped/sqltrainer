@@ -1,0 +1,7 @@
+26. Keressük azokat a könyveket, amelyeknek a címének a 2. karaktere 'a'.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where cim like '_a%';

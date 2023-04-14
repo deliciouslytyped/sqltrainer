@@ -1,0 +1,9 @@
+108. Mi a szerzõ azonosítója a sci-fi, krimi, horror témájú könyvek szerzõinek? Minden azonosítót csak egyszer listázzunk, a lista legyen rendezett.
+============
+order_matters=False
+============
+select distinct szerzo_azon
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+where tema in ('sci-fi', 'krimi', 'horror')
+order by szerzo_azon;

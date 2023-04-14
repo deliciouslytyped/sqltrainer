@@ -1,0 +1,7 @@
+42. Listázzuk ki azokat a tagokat, akinek a vezetéknevében legalább két 'a' betû szerepel, mindegy, hogy kicsi vagy nagy.
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where lower(vezeteknev) like '%a%a%';

@@ -1,0 +1,9 @@
+163. Listázzuk ki az elsõ 10 legidõsebb tag nevét!
+============
+order_matters=False
+============
+select b.*, rownum
+from (select vezeteknev, keresztnev, to_char(szuletesi_datum,'yyyy.mm.dd')
+from konyvtar.tag
+order by szuletesi_datum) b
+where rownum<11;

@@ -1,0 +1,6 @@
+190. Dobjuk el a bicikli tábla elsõdleges kulcsát!
+============
+order_matters=False
+============
+alter table bicikli
+drop primary key;

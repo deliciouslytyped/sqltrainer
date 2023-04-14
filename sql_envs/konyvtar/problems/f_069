@@ -1,0 +1,10 @@
+69. Listázzuk ki az 1940 és 1960 között született nõi tagok besorolását. Minden besorolás csak egyszer szerepeljen. Rendezzük a listát.
+============
+order_matters=False
+============
+select distinct besorolas
+from konyvtar.tag
+where nem='n' and
+szuletesi_datum between to_date('1940.01.01','yyyy.mm.dd')
+and to_date('1960.12.31','yyyy.mm.dd')
+order by besorolas;

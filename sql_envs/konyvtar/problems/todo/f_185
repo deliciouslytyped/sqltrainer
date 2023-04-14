@@ -1,0 +1,6 @@
+185. Módosítsuk a bicikli tábla szín oszlopának típusát varchar2(30)-ra!
+============
+order_matters=False
+============
+alter table bicikli
+modify (szin varchar2(30));

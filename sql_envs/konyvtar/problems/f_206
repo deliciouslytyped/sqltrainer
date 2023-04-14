@@ -1,0 +1,15 @@
+206. Módosítsuk a könyvszerzõ táblát: az 1900 után született szerzõk és azon könyvek esetén, amelyek ára több, mint 5000 növeljük meg a honorariumot a könyv árának a 70%-ával.
+============
+order_matters=False
+============
+update konyvszerzo ksz
+set honorarium=honorarium+(select ar*0.7
+from konyvtar.konyv ko
+where ksz.KONYV_AZON=ko.konyv_azon)
+where szerzo_azon in (select szerzo_azon
+from konyvtar.szerzo
+where szuletesi_datum>to_date('1900','yyyy'))
+and konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where ar>5000);
+commit;

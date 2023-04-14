@@ -1,0 +1,9 @@
+91. A keresztnév elsõ két betûjeként csoportosítva hány nõi tag van? Rendezzük a listát darabszám szerint csökkenõen.
+============
+order_matters=False
+============
+select substr(keresztnev,1,2), count(*) db
+from konyvtar.tag
+where nem='n'
+group by substr(keresztnev,1,2)
+order by db desc;

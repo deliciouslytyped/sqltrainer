@@ -1,0 +1,12 @@
+159. Témánként ki az utoljára kiadott könyv szerzõje?
+============
+order_matters=False
+============
+select ko.konyv_azon, tema, vezeteknev, keresztnev, kiadas_datuma
+from konyvtar.konyv ko left outer join konyvtar.konyvszerzo ksz
+on ko.konyv_azon=ksz.konyv_azon
+left outer join konyvtar.szerzo sz
+on ksz.szerzo_azon=sz.szerzo_azon
+where (tema, kiadas_datuma) in (select tema, max(kiadas_datuma)
+from konyvtar.konyv
+group by tema);

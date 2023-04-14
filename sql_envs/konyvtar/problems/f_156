@@ -1,0 +1,9 @@
+156. Keressük azokat a tagokat, akiknek van kölcsönzésük.
+============
+order_matters=False
+============
+select *
+from konyvtar.tag ta
+where exists (select 1
+from konyvtar.kolcsonzes ko
+where ta.olvasojegyszam =ko.tag_azon);

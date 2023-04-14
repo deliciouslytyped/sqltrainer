@@ -1,0 +1,10 @@
+134. Melyik szerzõ írt 3-nál kevesebb könyvet?
+============
+order_matters=False
+============
+select sz.szerzo_azon, vezeteknev, keresztnev, count(konyv_azon)
+from konyvtar.szerzo sz left outer join
+konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon, vezeteknev, keresztnev
+having count(konyv_azon)<3;

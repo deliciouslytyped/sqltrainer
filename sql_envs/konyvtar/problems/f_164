@@ -1,0 +1,10 @@
+164. Listázzuk ki az elsõ 10 legdrágább könyvet.
+select *
+from (select *
+from konyvtar.konyv
+order by ar desc nulls last)
+where rownum<11;
+============
+order_matters=False
+============
+

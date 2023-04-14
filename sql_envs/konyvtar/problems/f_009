@@ -1,0 +1,8 @@
+9. Listázzuk ki a diák besorolású tagok minden adatát! A lista legyen név szerint rendezett.
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where besorolas='diák'
+order by vezeteknev, keresztnev;

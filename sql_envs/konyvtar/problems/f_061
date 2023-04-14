@@ -1,0 +1,6 @@
+61. Listázzuk ki a témákat! Mindegyik csak egyszer szerepeljen.
+============
+order_matters=False
+============
+select distinct tema
+from konyvtar.konyv;

@@ -1,0 +1,8 @@
+115. Hogy hívják Neena Kochhar fõnökét? Használjuk a HR sémát.
+============
+order_matters=False
+============
+select fonok.first_name, fonok.last_name
+from hr.employees nk inner join hr.employees fonok
+on nk.manager_id=fonok.employee_id
+where nk.first_name='Neena' and nk.last_name='Kochhar';

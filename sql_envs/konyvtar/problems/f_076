@@ -1,0 +1,7 @@
+76. Mi a legfiatalabb nõi, diák besorolású tag születési dátuma?
+============
+order_matters=False
+============
+select to_char(max(szuletesi_datum),'yyyy.mm.dd')
+from konyvtar.tag
+where nem='n' and besorolas='diák';

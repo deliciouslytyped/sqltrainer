@@ -1,0 +1,7 @@
+84. Momogrammonként hány tag van?
+============
+order_matters=False
+============
+select substr(vezeteknev,1,1)||substr(keresztnev,1,1), count(*)
+from konyvtar.tag
+group by substr(vezeteknev,1,1)||substr(keresztnev,1,1);

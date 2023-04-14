@@ -1,0 +1,6 @@
+62. Hány különbözõ téma van?
+============
+order_matters=False
+============
+select count(distinct tema)
+from konyvtar.konyv;

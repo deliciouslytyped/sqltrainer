@@ -1,0 +1,13 @@
+145. Melyek azok a szerzõk, akik nem szereztek könyvet?
+============
+order_matters=False
+============
+select *
+from konyvtar.szerzo
+where szerzo_azon not in (select szerzo_azon
+from konyvtar.konyvszerzo);
+select sz.szerzo_azon, sz.vezeteknev, sz.keresztnev
+from konyvtar.szerzo sz left outer join
+konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+where ksz.konyv_azon is null;

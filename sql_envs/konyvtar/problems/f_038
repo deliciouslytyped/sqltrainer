@@ -1,0 +1,6 @@
+38. Listázzuk ki az 'almafa' szót nagy kezdõbetûvel!
+============
+order_matters=False
+============
+select initcap('almafa')
+from dual;

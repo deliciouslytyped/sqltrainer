@@ -1,0 +1,9 @@
+140. Listázzuk a PARK KÖNYVKIADÓ KFT. és a EURÓPA KÖNYVKIADÓ KFT. kiadójú könyvek összes könyvének azonosítóját, és ha van hozzá példány, akkor annak a leltári számát.
+============
+order_matters=False
+============
+select kv.konyv_azon, cim, kk.leltari_szam
+from konyvtar.konyv kv left outer join
+konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+where kiado in ('PARK KÖNYVKIADÓ KFT.','EURÓPA KÖNYVKIADÓ KFT.');

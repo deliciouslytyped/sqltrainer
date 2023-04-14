@@ -1,0 +1,13 @@
+168. Melyek azok a keresztnevek, amelyek szerzõ keresztneve is és egyben valamelyik tagé is.
+============
+order_matters=False
+============
+select keresztnev
+from konyvtar.szerzo
+intersect
+select keresztnev
+from konyvtar.tag;
+------------
+select sz.keresztnev
+from konyvtar.szerzo sz inner join konyvtar.tag t
+on sz.keresztnev=t.keresztnev;

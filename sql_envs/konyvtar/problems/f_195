@@ -1,0 +1,9 @@
+195. Hozzunk létre nézetet legidosebb_szerzo néven, amely a legidõsebb szerzõ nevét és születési dátumát listázza.
+============
+order_matters=False
+============
+create view legidosebb_szerzo as
+select vezeteknev||' '||keresztnev nev, to_char(szuletesi_datum,'yyyy.mm.dd') szul_dat
+from konyvtar.szerzo
+where szuletesi_datum=(select min(szuletesi_datum)
+from konyvtar.szerzo);

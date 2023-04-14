@@ -1,0 +1,7 @@
+24. Keressük azokat a könyveket, amelyeknek a címe a 'Re' sztringgel kezdõdik.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where cim like 'Re%'

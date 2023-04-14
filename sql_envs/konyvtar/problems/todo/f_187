@@ -1,0 +1,5 @@
+187. Nevezzük át a személy táblát szemely2-re.
+============
+order_matters=False
+============
+rename szemely to szemely2;

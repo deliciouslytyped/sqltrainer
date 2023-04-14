@@ -1,0 +1,7 @@
+25. Keressük azokat a könyveket, amelyeknek a címe nem a 'Re' sztringgel kezdõdik.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where cim not like 'Re%';

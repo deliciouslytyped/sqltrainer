@@ -1,0 +1,6 @@
+1. Listázzuk ki a tagokat!
+============
+order_matters=False
+============
+select *
+from konyvtar.tag;

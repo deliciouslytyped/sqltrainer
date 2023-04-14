@@ -1,0 +1,6 @@
+64. Mi a legidõsebb szerzõ születési dátuma?
+============
+order_matters=False
+============
+select to_char(min(szuletesi_datum),'yyyy.mm.dd')
+from konyvtar.szerzo;

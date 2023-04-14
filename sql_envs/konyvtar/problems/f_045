@@ -1,0 +1,8 @@
+45. Listázzuk ki a mai dátumot, a két hónappal késõbbi dátumot és a két hónappal korábbi dátumot.
+============
+order_matters=False
+============
+select to_char(sysdate,'yyyy.mon dd hh24:mi:ss'),
+to_char(add_months(sysdate,2),'yyyy.mon dd hh24:mi:ss'),
+to_char(add_months(sysdate,-2),'yyyy.mon dd hh24:mi:ss')
+from dual;

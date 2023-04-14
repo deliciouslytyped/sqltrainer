@@ -1,0 +1,10 @@
+107. Mi a sci-fi, krimi, horror témájú könyvek címe és szerzõinek a neve?
+============
+order_matters=False
+============
+select cim, vezeteknev||' '||keresztnev, tema
+from konyvtar.konyv ko inner join konyvtar.konyvszerzo ksz
+on ko.konyv_azon=ksz.konyv_azon
+inner join konyvtar.szerzo sz
+on ksz.szerzo_azon=sz.szerzo_azon
+where tema in ('sci-fi','krimi','horror');

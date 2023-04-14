@@ -1,0 +1,6 @@
+36. Listázzuk ki a felhasználói nevünket!
+============
+order_matters=False
+============
+select user
+from dual;

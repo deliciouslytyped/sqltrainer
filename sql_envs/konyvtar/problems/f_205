@@ -1,0 +1,11 @@
+205. Módosítsuk azon tagok beiratkozási dátumát, akiknek a beiratkozási dátuma késõbbre esik, mint a legelsõ kölcsönzési dátuma. Az új beiratkozási dátuma legyen a legelsõ kölcsönzési dátuma.
+============
+order_matters=False
+============
+update tag
+set beiratkozasi_datum=(select min(kolcsonzesi_datum)
+from konyvtar.kolcsonzes kol
+where tag.olvasojegyszam=kol.tag_azon)
+where beiratkozasi_datum>(select min(kolcsonzesi_datum)
+from konyvtar.kolcsonzes kol
+where tag.olvasojegyszam=kol.tag_azon);

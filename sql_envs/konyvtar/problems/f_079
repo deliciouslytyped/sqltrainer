@@ -1,0 +1,8 @@
+79. Melyek azok a témák, amelyekhez 7-nél több könyv tartozik?
+============
+order_matters=False
+============
+select tema
+from konyvtar.konyv
+group by tema
+having count(*)>7;

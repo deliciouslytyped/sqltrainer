@@ -1,0 +1,8 @@
+85. Melyik az a születési év és hónap, amelyikben 10-nél kevesebb tag született?
+============
+order_matters=False
+============
+select to_char(szuletesi_datum,'yyyy.mm'), count(*)
+from konyvtar.tag
+group by to_char(szuletesi_datum,'yyyy.mm')
+having count(*)<10;

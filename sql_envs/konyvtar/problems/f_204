@@ -1,0 +1,11 @@
+204. Módosítsuk azoknak a könyvtári könyveknek az értékét, amelyeknek az értéke nagyobb, mint a hozzátartozó könyv árának a fele. Az eredeti értéket csökkentsük azzal az értékkel, amelyet úgy számolunk ki, hogy a könyv árát elosztjuk a kiadás dátuma óta eltelt évek számával.
+============
+order_matters=False
+============
+update konyvtari_konyv kk
+set ertek=ertek-(select ar/(months_between(sysdate, kiadas_datuma)/12)
+from konyvtar.konyv ko
+where kk.konyv_azon=ko.konyv_azon)
+where ertek>(select ar*0.5 from konyvtar.konyv ko
+where kk.konyv_azon=ko.konyv_azon);
+rollback;

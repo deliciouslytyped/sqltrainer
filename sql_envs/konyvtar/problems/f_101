@@ -1,0 +1,19 @@
+101. Listázzuk ki a könyvek azonosítóit, a könyvek címeit és a könyvekhez kapcsolódó példányok leltári számait. (Csak azokat a könyveket és példányokat listázzuk, amelyeknek van a másik táblában megfelelõje.)
+============
+order_matters=False
+============
+select ko.konyv_azon, ko.cim, kk.konyv_azon, kk.leltari_szam
+from konyvtar.konyv ko inner join konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon;
+------------
+select konyv_azon, ko.cim, kk.leltari_szam
+from konyvtar.konyv ko inner join konyvtar.konyvtari_konyv kk
+using (konyv_azon);
+------------
+select konyv_azon, ko.cim, kk.leltari_szam
+from konyvtar.konyv ko join konyvtar.konyvtari_konyv kk
+using (konyv_azon);
+------------
+select konyv_azon, ko.cim, kk.leltari_szam
+from konyvtar.konyv ko, konyvtar.konyvtari_konyv kk
+where ko.konyv_azon=kk.konyv_azon;

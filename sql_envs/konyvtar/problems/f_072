@@ -1,0 +1,9 @@
+72. Hány olyan tag van, aki 40 évnél fiatalabb vagy a nevében pontosan kettõ darab 'e' betû szerepel?
+============
+order_matters=False
+============
+select count(*)
+from konyvtar.tag
+where months_between(sysdate, szuletesi_datum)/12<40
+or (lower(vezeteknev||' '||keresztnev) like '%e%e%'
+and lower(vezeteknev||' '||keresztnev) not like '%e%e%e%');

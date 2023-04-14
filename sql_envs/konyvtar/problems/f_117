@@ -1,0 +1,8 @@
+117. Az 5000-nél olcsóbb (árú) könyveknek hány különbözõ szerzõje van?
+============
+order_matters=False
+============
+select count(distinct szerzo_azon)
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+where ar<5000;

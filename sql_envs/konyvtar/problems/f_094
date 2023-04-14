@@ -1,0 +1,8 @@
+94. Melyek azok a könyvek (csak konyv_azon kell), amelyekhez 5-nél több példány tartozik?
+============
+order_matters=False
+============
+select konyv_azon, count(*)
+from konyvtar.konyvtari_konyv
+group by konyv_azon
+having count(*)>5;

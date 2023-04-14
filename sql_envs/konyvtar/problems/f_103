@@ -1,0 +1,13 @@
+103. Milyen könyveket (azononsító és cím) kölcsönzött Ácsi Milán?
+============
+order_matters=False
+============
+select kv.konyv_azon, kv.cim, to_char(ko.kolcsonzesi_datum,'yyyy.mm.dd')
+from konyvtar.tag tg inner join konyvtar.kolcsonzes ko
+on tg.olvasojegyszam=ko.tag_azon
+inner join konyvtar.konyvtari_konyv kk
+on ko.leltari_szam=kk.leltari_szam
+inner join konyvtar.konyv kv
+on kk.konyv_azon=kv.konyv_azon
+where vezeteknev='Ácsi'
+and keresztnev='Milán';

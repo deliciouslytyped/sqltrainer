@@ -1,0 +1,12 @@
+154. Melyik szerzõ kapta a legnagyobb összhonoráriumot?
+============
+order_matters=False
+============
+select sz.szerzo_azon, vezeteknev, keresztnev, sum(nvl(honorarium,0))
+from konyvtar.szerzo sz left outer join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon, vezeteknev, keresztnev
+having sum(nvl(honorarium,0)) =(select max(sum(nvl(honorarium,0)))
+from konyvtar.szerzo sz left outer join konyvtar.konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+group by sz.szerzo_azon)

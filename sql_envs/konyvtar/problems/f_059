@@ -1,0 +1,7 @@
+59. Mi a legidõsebb szerzõ születési dátuma és életkora?
+============
+order_matters=False
+============
+select to_char(min(szuletesi_datum),'yyyy.mm.dd'),
+months_between(sysdate,min(szuletesi_datum))/12
+from konyvtar.szerzo;

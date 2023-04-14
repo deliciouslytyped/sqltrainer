@@ -1,0 +1,7 @@
+75. Mi az összértéke azoknak a könyvpéldányoknak, amelyek az 1116152201 azonosítójú könyvekhez tartoznak.
+============
+order_matters=False
+============
+select sum(ertek)
+from konyvtar.konyvtari_konyv
+where konyv_azon=1116152201;

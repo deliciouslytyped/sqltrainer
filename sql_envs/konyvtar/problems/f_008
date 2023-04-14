@@ -1,0 +1,7 @@
+8. Listázzuk ki Luc Erna nevû tag minden adatát!
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where vezeteknev='Luc' and keresztnev='Erna';

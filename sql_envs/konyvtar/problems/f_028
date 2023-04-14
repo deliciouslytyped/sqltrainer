@@ -1,0 +1,7 @@
+28. Listázzuk ki a könyvek címét, és oldalankénti árát. Ez utóbbi értékkel próbáljuk ki a trunc és a round függvények mûködését.
+============
+order_matters=False
+============
+select cim,ar/oldalszam, trunc(ar/oldalszam), trunc(ar/oldalszam,2),
+round(ar/oldalszam), round(ar/oldalszam,2)
+from konyvtar.konyv;

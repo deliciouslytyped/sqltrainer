@@ -1,0 +1,11 @@
+49. Kik a 30 évnél fiatalabb tagok?
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, to_char(szuletesi_datum,'yyyy.mm.dd')
+from konyvtar.tag
+where months_between(sysdate,szuletesi_datum)/12<30;
+------------
+select vezeteknev, keresztnev, to_char(szuletesi_datum,'yyyy.mm.dd')
+from konyvtar.tag
+where add_months(szuletesi_datum,12*30)>sysdate;

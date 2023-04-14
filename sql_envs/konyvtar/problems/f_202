@@ -1,0 +1,15 @@
+202. Növeljük meg azon könyvtári könyvek értékét 10%-kal, amelyeket 2000 után kölcsönözték ki, és amelyeknek a címében pontosan 2 db 'a' betû (mindegy, hogy kicsi vagy nagy) szerepel.
+============
+order_matters=False
+============
+update konyvtari_konyv
+set ertek=ertek*1.1
+where leltari_szam in
+(select leltari_szam
+from konyvtar.kolcsonzes
+where kolcsonzesi_datum>to_date('2000','yyyy'))
+and konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where lower(cim) like '%a%a%'
+and lower(cim) not like '%a%a%a%');
+commit;

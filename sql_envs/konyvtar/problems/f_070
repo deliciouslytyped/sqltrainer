@@ -1,0 +1,7 @@
+70. Hány nõi, diák besorolású tag van?
+============
+order_matters=False
+============
+select count(*)
+from konyvtar.tag
+where nem='n' and besorolas='diák';

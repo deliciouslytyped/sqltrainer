@@ -1,0 +1,6 @@
+60. ABC sorrendben melyik az elsõ és az utolsó téma?
+============
+order_matters=False
+============
+select min(tema), max(tema)
+from konyvtar.konyv;

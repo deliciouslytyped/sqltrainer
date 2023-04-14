@@ -1,0 +1,8 @@
+83. Melyik az a téma, amelynek az átlagos oldalszáma kevesebb, mint 400?
+============
+order_matters=False
+============
+select tema, avg(oldalszam)
+from konyvtar.konyv
+group by tema
+having avg(oldalszam)<400;

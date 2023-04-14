@@ -1,0 +1,7 @@
+52. Listázzuk ki az 1980.03.02 elõtt született férfi tagok nevét és születési dátumát.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev, to_char(szuletesi_datum, 'yyyy.mm.dd')
+from konyvtar.tag
+where nem='f' and szuletesi_datum<to_date('1980.03.02','yyyy.mm.dd');

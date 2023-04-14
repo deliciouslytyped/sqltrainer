@@ -1,0 +1,6 @@
+48. Hány év telt el 2000 január 1 óta?
+============
+order_matters=False
+============
+select months_between(sysdate,to_date('2000.01.01','yyyy.mm.dd'))/12
+from dual;

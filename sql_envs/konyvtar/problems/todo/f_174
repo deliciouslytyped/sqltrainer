@@ -1,0 +1,18 @@
+174. Szúrjunk be a szemely táblába három sort.
+============
+order_matters=False
+============
+insert into szemely (azon, nev, szul_dat, irsz, cim, zsebpenz)
+values (10,'Kiss Béla',
+to_date('20100101 20:01','yyyymmdd hh24:mi'), '4028',
+'Debrecen',null);
+insert into szemely (azon, nev, szul_dat, irsz, cim, zsebpenz)
+values (20,'Kiss Eszter',
+to_date('20100101 20:01','yyyymmdd hh24:mi'), '4028',
+'Debrecen',null);
+commit;
+insert into szemely (azon, nev, szul_dat, irsz, cim, zsebpenz)
+values (30,'Nagy Tibor',
+to_date('20100101 20:01','yyyymmdd hh24:mi'), '4028',
+'Debrecen',120.32);
+commit;

@@ -1,0 +1,7 @@
+96. Témánként mennyi a legdrágább árú könyv ára?
+============
+order_matters=False
+============
+select tema, max(ar)
+from konyvtar.konyv
+group by tema;

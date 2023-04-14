@@ -1,0 +1,9 @@
+20. Keressük azokat a könyveket, amelyek nem krimi és sci-fi témájúak. A listát rendezzük ár, azon belül cím szerint.
+select *
+from konyvtar.konyv
+where tema not in ('krimi','sci-fi')
+order by ar, cim;
+============
+order_matters=False
+============
+

@@ -1,0 +1,11 @@
+196. Vegyünk fel a könyvszerzõ táblába egy sort: Agatha Christie megírta a legdrágább könyvet, amiért 5000 ft honoráriumot kapott.
+============
+order_matters=False
+============
+insert into konyvszerzo (szerzo_azon , konyv_azon, honorarium)
+select szerzo_azon, konyv_azon, 5000
+from konyvtar.szerzo, konyvtar.konyv
+where vezeteknev='Christie'
+and keresztnev='Agatha'
+and ar=(select max(ar) from konyvtar.konyv);
+commit;

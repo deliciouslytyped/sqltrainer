@@ -1,0 +1,8 @@
+11. Listázzuk ki azokat a könyveket, amelyek krimi témájúak, és amelyeknek az ára több, mint 3000! A lista legyen cím szerint rendezett.
+============
+order_matters=False
+============
+select *
+from konyvtar.konyv
+where tema='krimi' and ar>3000
+order by cim;

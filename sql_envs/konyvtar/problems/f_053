@@ -1,0 +1,9 @@
+53. Azokat a tagokat keressük, akinek a nevében legalább kettõ 'e' betû szerepel és igaz rájuk, hogy 40 évnél fiatalabbak vagy besorolásuk gyerek.
+============
+order_matters=False
+============
+select vezeteknev, keresztnev,
+to_char(SZULETESI_DATUM, 'yyyy.mm.dd'), besorolas
+from konyvtar.tag
+where lower(vezeteknev||keresztnev) like '%e%e%'
+and (besorolas='gyerek' or months_between(sysdate, SZULETESI_DATUM)/12<40);

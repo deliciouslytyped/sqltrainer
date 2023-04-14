@@ -1,0 +1,6 @@
+55. Listázzuk ki a könyvek minimum árát, maximum árát, összárát, átlagárát és darabszámát. Vizsgáljuk meg, hogy az átlagárat hogyan számolja a rendszer.
+============
+order_matters=False
+============
+select min(ar), max(ar), sum(ar), avg(ar), count(konyv_azon), sum(ar)/count(konyv_azon), sum(ar)/count(ar)
+from konyvtar.konyv;

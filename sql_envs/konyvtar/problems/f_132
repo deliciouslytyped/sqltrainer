@@ -1,0 +1,12 @@
+132. Listázzuk ki azokat a könyveket, amelyeknek az ára kevesebb, mint 5000, és van olyan szerzõje, aki 20 évvel ezelõtt született, és 5000-nél több honoráriumot kapott a könyvírásért.
+============
+order_matters=False
+============
+select cim, ko.konyv_azon
+from konyvtar.szerzo sz inner join konyvtar. konyvszerzo ksz
+on sz.szerzo_azon=ksz.szerzo_azon
+inner join konyvtar.konyv ko
+on ksz.konyv_azon=ko.konyv_azon
+where ar<5000
+and add_months(sysdate, -20*12)>szuletesi_datum
+and honorarium>5000;

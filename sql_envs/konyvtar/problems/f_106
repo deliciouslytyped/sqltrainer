@@ -1,0 +1,8 @@
+106. Mik a leltári számai a Tíz kicsi néger címû könyvhöz tartozó példányoknak?
+============
+order_matters=False
+============
+select leltari_szam
+from konyvtar.konyv ko inner join konyvtar.konyvtari_konyv kk
+on ko.konyv_azon=kk.konyv_azon
+where cim='Tíz kicsi néger';

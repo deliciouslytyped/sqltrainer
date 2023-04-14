@@ -1,0 +1,20 @@
+147. Kérdezzük le a Napóleon címû könyvek leltári számát!
+============
+order_matters=False
+============
+select leltari_szam
+from konyvtar.konyv kv inner join konyvtar.konyvtari_konyv kk
+on kv.konyv_azon=kk.konyv_azon
+where cim='Napóleon';
+------------
+select leltari_szam
+from konyvtar.konyvtari_konyv
+where konyv_azon in (select konyv_azon
+from konyvtar.konyv
+where cim='Napóleon');
+------------
+select leltari_szam
+from konyvtar.konyvtari_konyv kk inner join (select konyv_azon
+from konyvtar.konyv
+where cim='Napóleon') kv
+on kk.konyv_azon=kv.konyv_azon;

@@ -1,0 +1,11 @@
+176. Szúrjunk be három sort a bicikli táblába!
+============
+order_matters=False
+============
+insert into bicikli (azon, szin, tulaj_azon)
+values (100,'piros',5);
+insert into bicikli (azon, szin, tulaj_azon)
+values (110,'piros',null);
+insert into bicikli (azon, szin, tulaj_azon)
+values (200,'kék',20);
+commit;

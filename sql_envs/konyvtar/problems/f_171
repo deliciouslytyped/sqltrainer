@@ -1,0 +1,9 @@
+171. Tegyük egy listába a szerzõk keresztneveit, születési dátumait, besorolásukként null értéket feltüntetve és a tagok keresztneveit, születési dátumait és besorolásait.
+============
+order_matters=False
+============
+select keresztnev, szuletesi_datum, null besorolas
+from KONYVTAR.SZERZO
+union all
+select keresztnev, szuletesi_datum, besorolas
+from konyvtar.tag;

@@ -1,0 +1,9 @@
+135. Listázzuk ki az összes tagot, és ha kölcsönzött könyvet, akkor tegyük mellé az általa kölcsönzött könyv azonosítóját!
+============
+order_matters=False
+============
+select tag.vezeteknev, tag.keresztnev, tag.olvasojegyszam, ko.leltari_szam, kk.konyv_azon
+from konyvtar.tag tag left outer join konyvtar.kolcsonzes ko
+on tag.olvasojegyszam=ko.tag_azon
+left outer join konyvtar.konyvtari_konyv kk
+on ko.leltari_szam=kk.leltari_szam;

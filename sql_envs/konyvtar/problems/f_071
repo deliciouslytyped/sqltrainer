@@ -1,0 +1,6 @@
+71. Hány különbözõ városnév szerepel a tagok címeiben?
+============
+order_matters=False
+============
+select count(distinct substr(cim,6,instr(cim,',')-6))
+from konyvtar.tag;

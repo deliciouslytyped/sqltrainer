@@ -1,0 +1,10 @@
+118. Listázzuk ki azokat a kiadókat, amelyek 1000000 kevesebb összhonoráriumot osztottak ki. A lista legyen rendezett.
+============
+order_matters=False
+============
+select kiado, sum(honorarium)
+from konyvtar.konyv kv inner join konyvtar.konyvszerzo ksz
+on kv.konyv_azon=ksz.konyv_azon
+group by kiado
+having sum(nvl(honorarium,0))<1000000
+order by kiado;

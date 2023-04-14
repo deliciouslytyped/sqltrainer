@@ -1,0 +1,9 @@
+170. Tegyük egy listába a könyvek témáit és árait illetve a könyvek kiadóit és árait.
+============
+order_matters=False
+============
+select tema, ar
+from konyvtar.konyv
+union
+select kiado, ar
+from konyvtar.konyv;

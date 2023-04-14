@@ -1,0 +1,7 @@
+66. Mi a horror, sci-fi vagy krimi témájú könyvek átlagára?
+============
+order_matters=False
+============
+select avg(ar)
+from konyvtar.konyv
+where tema in ('horror','sci-fi','krimi');

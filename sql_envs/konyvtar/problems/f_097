@@ -1,0 +1,8 @@
+97. A 400 oldalnál kevesebb oldalszámú könyvek közül témánként mennyi a legolcsóbb könyvek ára.
+============
+order_matters=False
+============
+select tema, min(ar)
+from konyvtar.konyv
+where oldalszam<400
+group by tema;

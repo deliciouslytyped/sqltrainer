@@ -1,0 +1,6 @@
+189. Adjunk megszorítást a személy2 táblához: a név, születési dátum és a cím együtt legyen egyedi.
+============
+order_matters=False
+============
+alter table szemely2
+add constraint sz_uq unique (nev,szul_dat,cim);

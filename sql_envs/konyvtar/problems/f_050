@@ -1,0 +1,8 @@
+50. Melyek azok a tagok, akik 2000.01.01 elõtt születtek és akiknek a besorolása nyugdídjas, vagy felnõtt?
+============
+order_matters=False
+============
+select *
+from konyvtar.tag
+where szuletesi_datum<to_date('2000.01.01','yyyy.mm.dd')
+and besorolas in ('nyugdíjas','felnõtt');

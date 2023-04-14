@@ -1,0 +1,6 @@
+56. Számoljuk meg, hogy hány könyv azonosító, hány ár, és hány sor van a könyv táblába. Figyeljük meg és magyarázzuk meg a különbséget.
+============
+order_matters=False
+============
+select count(konyv_azon), count(ar), count(*)
+from konyvtar.konyv;

@@ -1,0 +1,5 @@
+179. Dobjuk el az eldobom táblát!
+============
+order_matters=False
+============
+drop table eldobom;

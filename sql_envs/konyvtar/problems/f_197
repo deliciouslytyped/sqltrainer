@@ -1,0 +1,12 @@
+197. Növeljük meg azon szerzõk honoráriumát az általuk írt könyv árának a 10-szeresével, akik 1900 után születtek.
+#TODO wtf
+============
+order_matters=False
+============
+update konyvszerzo ksz
+set honorarium=honorarium+(select ar*10
+from konyvtar.konyv ko
+where ksz.konyv_azon=ko.konyv_azon)
+where szerzo_azon in (select szerzo_azon
+from konyvtar.szerzo
+commit;

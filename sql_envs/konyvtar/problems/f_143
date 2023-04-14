@@ -1,0 +1,10 @@
+143. Melyik könyvtári könyveket kölcsönözték ki 3-nál kevesebbszer?
+============
+order_matters=False
+============
+select kk.leltari_szam, count(kolcsonzesi_datum)
+from konyvtar.konyvtari_konyv kk left outer join
+konyvtar.kolcsonzes ko
+on kk.leltari_szam=ko.leltari_szam
+group by kk.leltari_szam
+having count(kolcsonzesi_datum)<3;

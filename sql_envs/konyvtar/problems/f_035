@@ -1,0 +1,6 @@
+35. Listázzuk ki a könyvek címét és témáját. A témát még egyszer is jelenítsük meg úgy, hogy ha null érték, akkor helyette 3 db '*'-ot írjunk.
+============
+order_matters=False
+============
+select cim,tema, nvl(tema,'***')
+from konyvtar.konyv;

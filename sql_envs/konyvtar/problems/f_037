@@ -1,0 +1,5 @@
+37. Fûzzük össze az 'alma' és a 'fa' szavakat kétféle megoldással!
+============
+order_matters=False
+============
+select concat('alma','fa'),'alma'||'fa' from dual;

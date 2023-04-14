@@ -1,0 +1,8 @@
+93. Melyik kiadó adott ki 10 ezer feletti összértékben könyvet?
+============
+order_matters=False
+============
+select kiado,sum(ar)
+from konyvtar.konyv
+group by kiado
+having sum(ar)>10000;
