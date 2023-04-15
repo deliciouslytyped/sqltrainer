@@ -1,5 +1,6 @@
 # oracledb.exceptions.DatabaseError: ORA-02396: a maximális üresjárati idő túllépve, jelentkezzen be újra
 # f.db.close
+import itertools
 import string
 import traceback
 
@@ -127,6 +128,9 @@ class SQLTransformer:
     #TODO if name is /collides with a synonym, need to figure out if we resolve our own thing or the synonym
     #TODO dont double-apply (make sure transformations are disjoint?)
     #NOTE also does constraints now
+
+    #TODO ...ok I _do_ need to do name resolution, so i can absolutize paths, if I want to be able to use stuff like alter session set current_shema in preexec...
+    #TODO or not; if youre  using alter session the rewriting is pointless in the first place?
     def _prefix_tables(self, e):  # Ok but why
         scope = self.scope #TODO not dynamic enough? but it will work for now
         if isinstance(e, sqlglot.exp.Table):
@@ -343,7 +347,7 @@ class StoredSolution:
                 r = conn.execute(statement)
                 results.append(res := r.fetchall())
                 try:  # TODO figure out how to check ahead of time?
-                    mylog += "\n".join(",".join(str(cell) for cell in row) for row in res)
+                    mylog += "Expect:\n" +  "\n".join(",".join(str(cell) for cell in row) for row in res) + "\n"
                 except ResourceClosedError:
                     pass
             except Exception as e:
@@ -358,20 +362,24 @@ class StoredSolution:
             conn._allow_autobegin = True
         else:
             state = None
-        return results, state, shouldcheckstate
+        return results, state, shouldcheckstate, mylog
 
-    def get_my_solution(self, sqltext, conn, transformer, shouldcheckstate, mylog):
+    #NOTE preexec is not processed by the transformer because i would have had to implement more stuff for ALTER (see ALTER TABLE transformer code)
+    # also would probably need to provide an escape mechanism, or not?
+    def get_my_solution(self, sqltext, conn, transformer, shouldcheckstate, mylog, preexec=None):
         #TODO this wont work properly with stuff containing DCL or multistatement
         results = list()
         conn.begin()
-        for s in (x for x in transformer.parse(sqltext, self.dialect) if x is not None):
+        #_sqltext = (preexec + ";" if preexec is not None else "") + sqltext
+        for s in itertools.chain((x for x in sqlglot.parse(preexec, self.dialect) if x is not None) if preexec is not None else tuple(),
+                                 (x for x in transformer.parse(sqltext, self.dialect) if x is not None)):
             statement = text(s.sql(self.dialect))
             try:
                 mylog += f"running: {statement}\n"
                 r = conn.execute(statement)
                 results.append(res := r.fetchall())
                 try:
-                    mylog += "\n".join(",".join(str(cell) for cell in row) for row in res)
+                    mylog += "Got:\n" + "\n".join(",".join(str(cell) for cell in row) for row in res) + "\n"
                 except ResourceClosedError:  # TODO figure out how to check ahead of time?
                     pass
             except ResourceClosedError:
@@ -386,7 +394,7 @@ class StoredSolution:
             conn._allow_autobegin = True
         else:
             state = None
-        return results, state
+        return results, state, mylog
 
     #TODO improve flexibility; column permutations, superset of columns, ...?
     #TODO add diffing
@@ -424,7 +432,7 @@ class StoredSolution:
         return True # TODO more descriptive
 
     #TODO something about limiting fetched row count to not DOS yourself
-    def check_solution(self, sqltext, conn, _transformer, feladatsor, mylog, reuse_stored=None, reuse_my=None):
+    def check_solution(self, sqltext, conn, _transformer, feladatsor, log, reuse_stored=None, reuse_my=None, preexec=None):
         # TODO deal with collisions, this shouldnt be random
         # TODO this shouldnt work, why does it work
         my_randomprefix = "".join(random.choices(string.ascii_lowercase, k=6)) if reuse_my is None else reuse_my
@@ -440,17 +448,18 @@ class StoredSolution:
             sqltext = self.sql[0]#TODO
 
         #TODO for each permutation check equal subsets, ignore empties?
+        #TODO this is a bit of a mess right now;we cant use alter session set current schema, but we also cant use the transformed stuff to compare against querie referring to the tables in the problem schema because things like dates and other generated values will be different
         try:
             if reuse_stored is None:
                 feladatsor.init_env(stored_transformer)
-            if reuse_my is None:
+            storedresult, storedstate, checkstate, log = self.get_stored_solution(conn, stored_transformer, log)
+            if not checkstate and reuse_my is None:
                 feladatsor.init_env(my_transformer)
-            storedresult, storedstate, checkstate = self.get_stored_solution(conn, stored_transformer, mylog)
-            myresult, mystate = self.get_my_solution(sqltext, conn, my_transformer, checkstate, mylog)
+            myresult, mystate, log = self.get_my_solution(sqltext, conn, my_transformer if checkstate else stored_transformer, checkstate, log, preexec)
         except Exception: #TODO #NOTE: parseerror, databaseerror, ...?
             traceback.print_exc()
             conn.rollback() #TODO this doesnt realy do what it's supposed to here, this is just so sqlalchemy doesnt complain about transaction state
-            return my_transformer, stored_transformer, False
+            return my_transformer, stored_transformer, log, False
         if checkstate:
             if self.checker:
                 # TODO structure
@@ -460,8 +469,8 @@ class StoredSolution:
             else:
                 checkstate = self.compare_state(my_transformer, stored_transformer, mystate, storedstate, **self.options)
             if not checkstate or checkstate is None: #TODO assert checkstate not none?
-                return my_transformer, stored_transformer, False
-        return my_transformer, stored_transformer, self.compare_lists_of_resultbags(myresult, storedresult, **self.options)
+                return my_transformer, stored_transformer, log, False
+        return my_transformer, stored_transformer, log, self.compare_lists_of_resultbags(myresult, storedresult, **self.options)
 
 
 #TODO need to introduce dependencies between problems and in their checking
@@ -536,9 +545,9 @@ class Feladatsor(): #TODO rename to feladat, differentiate feladatsor and felada
         self.del_env(transformer)
         self.init_env(transformer)
 
-    def check_solution(self, fname, sqltext, mylog, reuse_my=None, reuse_stored=None):
+    def check_solution(self, fname, sqltext, mylog, reuse_my=None, reuse_stored=None, preexec=None):
         soln = StoredSolution(self.root_path, fname)
-        return soln.check_solution(sqltext, self.db.conn, self.transformer, self, mylog, reuse_my, reuse_stored)
+        return soln.check_solution(sqltext, self.db.conn, self.transformer, self, mylog, reuse_my, reuse_stored, preexec)
 
 class Session:
     def __init__(self, user, passw):
@@ -556,7 +565,8 @@ class Session:
                                       "insert": ["konyvtar_insert.sql"],
                                       "init": [],  # TODO cant handle pl/sql ["update_date_ship.sql"], # TODO handle None or missing
                                       "delete": ["konyvtar_delete.sql"]})
-        self.f.reset_env(self.f.transformer)
+        self.f.del_all_env(self.f.transformer)
+        #self.f.reset_env(self.f.transformer)
 
 
 class Test(unittest.TestCase):
@@ -591,11 +601,11 @@ class Test(unittest.TestCase):
             #TODO pure environments, i.e. reset, and  also, make init faster
             with self.subTest(fname): #TODO how to get pycharm to log subtests properly?
                 #assert f.check_solution("f_1", "select *  from konyvtar.tag ORDER BY vezeteknev DESC") == True
-                my_transformer, stored_transformer, result = f.check_solution(fname, None, mylog,
+                my_transformer, stored_transformer, log, result = f.check_solution(fname, None, mylog,
                                                                               reuse_stored=stored_transformer.scopeprefix if stored_transformer is not None else None,
                                                                               reuse_my=my_transformer.scopeprefix if my_transformer is not None else None)
                 self.assertTrue(result)
-                _, _, result = f.check_solution(fname, "select 65537 from dual", mylog, reuse_stored=stored_transformer.scopeprefix, reuse_my=my_transformer.scopeprefix)
+                _, _, log, result = f.check_solution(fname, "select 65537 from dual", log, reuse_stored=stored_transformer.scopeprefix, reuse_my=my_transformer.scopeprefix)
                 self.assertFalse(result)
 
     @unittest.skip

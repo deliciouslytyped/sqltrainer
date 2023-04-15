@@ -128,22 +128,22 @@ def page():
         log = ""
         #TODO ugh i need to implement some whole sessionless state manager crap due to lack of persistent state
         s = sql_mgr.Session(session["savedstate"]["user"], session["savedstate"]["pass"])
-        for statement in (x for x in sqlglot.parse(session["savedstate"]["sessionsql"]) if x is not None):
-            try:
-                log += f"running: {statement}\n"
-                s.d.conn.begin()
-                res = s.d.conn.execute(text(statement.sql(s.t.dialect)))
-                s.d.conn.commit()
-                try: #TODO figure out how to check ahead of time?
-                    log += "\n".join(",".join(str(cell) for cell in row) for row in res.fetchall())
-                except sqlalchemy.exc.ResourceClosedError:
-                    pass
-            except Exception as e:
-                traceback.print_exc(e)
-                strs = traceback.format_exception()
-                log += "".join(strs)
-            finally:
-                s.d.conn.commit()
+        # for statement in (x for x in sqlglot.parse(session["savedstate"]["sessionsql"]) if x is not None):
+        #     try:
+        #         log += f"running: {statement}\n"
+        #         s.d.conn.begin()
+        #         res = s.d.conn.execute(text(statement.sql(s.t.dialect)))
+        #         s.d.conn.commit()
+        #         try: #TODO figure out how to check ahead of time?
+        #             log += "\n".join(",".join(str(cell) for cell in row) for row in res.fetchall())
+        #         except sqlalchemy.exc.ResourceClosedError:
+        #             pass
+        #     except Exception as e:
+        #         traceback.print_exc(e)
+        #         strs = traceback.format_exception()
+        #         log += "".join(strs)
+        #     finally:
+        #         s.d.conn.commit()
 
         # results = list()
         # for statement in (x for x in sqlglot.parse(session["savedstate"]["KONYVTAR"][activeproblem]["mysolution"]) if x is not None):
@@ -162,9 +162,8 @@ def page():
         #         log += "".join(strs)
         #     finally:
         #         s.d.conn.commit()
-        mylog = ""
         try:
-            _, _, reslt = s.f.check_solution(f"f_{int(activeproblem):03}", session["savedstate"]["KONYVTAR"][activeproblem]["mysolution"], mylog)
+            _, _, log, reslt = s.f.check_solution(f"f_{int(activeproblem):03}", session["savedstate"]["KONYVTAR"][activeproblem]["mysolution"], log, preexec=session["savedstate"]["sessionsql"])
             session["problemstate"]["KONYVTAR"][int(activeproblem)] = "correct" if reslt else "wrong"
         except Exception as e:
             traceback.print_exc()
@@ -182,7 +181,7 @@ def page():
         cur.execute("INSERT OR REPLACE INTO savedresults (uid, problem, result) VALUES (?, ?, ?)", (int(session["i"]), int(activeproblem), pickle.dumps(log)))
 
     #g.savedresults_maxlen = {k: max(len(",".join(str(x) for x in r)) for r in v) for k,v in g.savedresults.items()}
-    g.savedresults_maxlen = {k: max(len(l) for l in v.split()) for k,v in g.savedresults.items()}
+    g.savedresults_maxlen = {k: max(len(l) for l in v.split("\n")) for k,v in g.savedresults.items()}
     conn.commit()
     return render_template("frontend_en.html", problemsets=[("KONYVTAR", problems)])
 
