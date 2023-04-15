@@ -1,4 +1,4 @@
-197. Növeljük meg azon szerzõk honoráriumát az általuk írt könyv árának a 10-szeresével, akik 1900 után születtek.
+197. Nï¿½veljï¿½k meg azon szerzï¿½k honorï¿½riumï¿½t az ï¿½ltaluk ï¿½rt kï¿½nyv ï¿½rï¿½nak a 10-szeresï¿½vel, akik 1900 utï¿½n szï¿½lettek.
 #TODO wtf
 ============
 order_matters=False
@@ -8,5 +8,5 @@ set honorarium=honorarium+(select ar*10
 from konyvtar.konyv ko
 where ksz.konyv_azon=ko.konyv_azon)
 where szerzo_azon in (select szerzo_azon
-from konyvtar.szerzo
+from konyvtar.szerzo;
 commit;

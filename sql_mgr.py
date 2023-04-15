@@ -172,7 +172,7 @@ class SQLTransformer:
             # Identifier corresponding to referenced table
             #TODO schema case not handled, parser doesnt handle it either
             e.args["reference"].this.args["this"] = self.transform_tablename_scoped(scope, e.args["reference"].this.this)
-        elif isinstance(e, sqlglot.exp.Reference):
+        elif isinstance(e, sqlglot.exp.Reference) and not isinstance(e.parent, sqlglot.exp.ForeignKey): #redundant with above for that case
             e.this.args["this"] = self.transform_tablename_scoped(scope, e.this.this)
         elif isinstance(e, sqlglot.exp.Constraint): #TODO handle other constraint names?
             #TODO assert identifier
@@ -329,7 +329,7 @@ class StoredSolution:
             self.checker = Checker.load(checkerpath)
 
     #TODO assert all solutions are consistent
-    def get_stored_solution(self, conn, transformer):
+    def get_stored_solution(self, conn, transformer, mylog):
         #TODO this wont work properly with stuff containing DCL or multistatement
         results = list()
         conn.begin()
@@ -337,11 +337,19 @@ class StoredSolution:
         for s in (x for x in transformer.parse(self.sql[0], self.dialect) if x is not None): # TODO only looks at first solution
             if s.__class__.__name__ != "Select":
                 shouldcheckstate = True
-            r = conn.execute(text(s.sql(self.dialect)))
+            statement = text(s.sql(self.dialect))
             try:
-                results.append(r.fetchall())
-            except ResourceClosedError:
-                pass
+                mylog += f"running: {statement}\n"
+                r = conn.execute(statement)
+                results.append(res := r.fetchall())
+                try:  # TODO figure out how to check ahead of time?
+                    mylog += "\n".join(",".join(str(cell) for cell in row) for row in res)
+                except ResourceClosedError:
+                    pass
+            except Exception as e:
+                traceback.print_exc()
+                strs = traceback.format_exc()
+                mylog += "".join(strs)
         conn.rollback()
         if shouldcheckstate:
             state = sqlalchemy.MetaData()#TODO probably not how this should work
@@ -352,16 +360,24 @@ class StoredSolution:
             state = None
         return results, state, shouldcheckstate
 
-    def get_my_solution(self, sqltext, conn, transformer, shouldcheckstate):
+    def get_my_solution(self, sqltext, conn, transformer, shouldcheckstate, mylog):
         #TODO this wont work properly with stuff containing DCL or multistatement
         results = list()
         conn.begin()
         for s in (x for x in transformer.parse(sqltext, self.dialect) if x is not None):
-            r = conn.execute(text(s.sql(self.dialect)))
+            statement = text(s.sql(self.dialect))
             try:
-                results.append(r.fetchall())
+                mylog += f"running: {statement}\n"
+                r = conn.execute(statement)
+                results.append(res := r.fetchall())
+                try:
+                    mylog += "\n".join(",".join(str(cell) for cell in row) for row in res)
+                except ResourceClosedError:  # TODO figure out how to check ahead of time?
+                    pass
             except ResourceClosedError:
-                pass
+                traceback.print_exc()
+                strs = traceback.format_exc()
+                mylog += "".join(strs)
         conn.rollback()
         if shouldcheckstate:
             state = sqlalchemy.MetaData()#TODO probably not how this should work
@@ -386,14 +402,19 @@ class StoredSolution:
         else:
             return False
 
+    #TODO its redundant passing both reflection objects because they both contain the rest of the database info anyway
     def compare_state(self, storedtransformer, mytransformer, storedmetadata, mymetadata, **kwargs):
         #TODO could just match whitelisted / blacklisted columns of data dictionary?
         for t in [_t for _t in storedmetadata.tables if _t.startswith(storedtransformer.getPrefix())]:
             storedcolumnnames = [_c.name for _c in storedmetadata.tables[t].columns]
-            mycolumns = [_c.name for _c in mymetadata.tables[t].columns]
-            mycolnames = [x.name for x in mycolumns]
+            try:
+                equivtable = mytransformer.getPrefix() + t.replace(storedtransformer.getPrefix(), "")
+                mycolumns = [_c.name for _c in mymetadata.tables[equivtable].columns]
+            except Exception as e:
+                raise e
+            #mycolnames = [x.name for x in mycolumns]
             for cname in storedcolumnnames:
-                if not mytransformer.getPrefix() + cname in mycolnames:
+                if not cname in mycolumns:
                     logging.info(f"{cname} in ({storedtransformer.getPrefix()},{t}) missing from  ({mytransformer.getPrefix()},{t})")
                     return False
                 else:
@@ -403,7 +424,7 @@ class StoredSolution:
         return True # TODO more descriptive
 
     #TODO something about limiting fetched row count to not DOS yourself
-    def check_solution(self, sqltext, conn, _transformer, feladatsor, reuse_stored=None, reuse_my=None):
+    def check_solution(self, sqltext, conn, _transformer, feladatsor, mylog, reuse_stored=None, reuse_my=None):
         # TODO deal with collisions, this shouldnt be random
         # TODO this shouldnt work, why does it work
         my_randomprefix = "".join(random.choices(string.ascii_lowercase, k=6)) if reuse_my is None else reuse_my
@@ -424,12 +445,12 @@ class StoredSolution:
                 feladatsor.init_env(stored_transformer)
             if reuse_my is None:
                 feladatsor.init_env(my_transformer)
-            storedresult, storedstate, checkstate = self.get_stored_solution(conn, stored_transformer)
-            myresult, mystate = self.get_my_solution(sqltext, conn, my_transformer, checkstate)
+            storedresult, storedstate, checkstate = self.get_stored_solution(conn, stored_transformer, mylog)
+            myresult, mystate = self.get_my_solution(sqltext, conn, my_transformer, checkstate, mylog)
         except Exception: #TODO #NOTE: parseerror, databaseerror, ...?
             traceback.print_exc()
             conn.rollback() #TODO this doesnt realy do what it's supposed to here, this is just so sqlalchemy doesnt complain about transaction state
-            return False
+            return my_transformer, stored_transformer, False
         if checkstate:
             if self.checker:
                 # TODO structure
@@ -439,7 +460,7 @@ class StoredSolution:
             else:
                 checkstate = self.compare_state(my_transformer, stored_transformer, mystate, storedstate, **self.options)
             if not checkstate or checkstate is None: #TODO assert checkstate not none?
-                return False
+                return my_transformer, stored_transformer, False
         return my_transformer, stored_transformer, self.compare_lists_of_resultbags(myresult, storedresult, **self.options)
 
 
@@ -515,9 +536,9 @@ class Feladatsor(): #TODO rename to feladat, differentiate feladatsor and felada
         self.del_env(transformer)
         self.init_env(transformer)
 
-    def check_solution(self, fname, sqltext, reuse_my=None, reuse_stored=None):
+    def check_solution(self, fname, sqltext, mylog, reuse_my=None, reuse_stored=None):
         soln = StoredSolution(self.root_path, fname)
-        return soln.check_solution(sqltext, self.db.conn, self.transformer, self, reuse_my, reuse_stored)
+        return soln.check_solution(sqltext, self.db.conn, self.transformer, self, mylog, reuse_my, reuse_stored)
 
 class Session:
     def __init__(self, user, passw):
@@ -542,13 +563,13 @@ class Test(unittest.TestCase):
     def testkonyvtar(self):
         prefix = "unique_prefix1_"
         d = DB()
-        d.connect(*open("cred","r").read().split())
+        d.connect(*open("cred","r").read().split(":"))
         #TODO un****
         d.conn.execute(text("alter session set NLS_NUMERIC_CHARACTERS=',.'"))
         synonyms = [x[0].lower() for x in d.conn.execute(text("select synonym_name from all_synonyms")).fetchall()]
         d.conn.commit() # needed because above implicitly starts transaction...
         scope = Scope(public_synonyms=synonyms)  # TODO not dynamic enough? but it will work for now
-        t = SQLTransformer(scope, "sqltrainer", prefix, open("cred","r").read().split()[0])
+        t = SQLTransformer(scope, "sqltrainer", prefix, open("cred","r").read().split(":")[0])
         f = Feladatsor(d, t, "konyvtar", {"create": ["konyvtar_create.sql"],  # TODO assert all exist (construct path object)
                                       "insert": ["konyvtar_insert.sql"],
                                       "init": [],  # TODO cant handle pl/sql ["update_date_ship.sql"], # TODO handle None or missing
@@ -560,6 +581,7 @@ class Test(unittest.TestCase):
         # assert f.check_solution(1, "select 1 from dual") == False
         #TODO tests that use sysdate will fail erratically! TODO to work around this we insert a static date value in the transformer
         my_transformer, stored_transformer = None, None
+        mylog = ""
         for fname in os.listdir(f.root_path / "problems"):
             # if fname != "f_173":
             #     continue
@@ -569,25 +591,25 @@ class Test(unittest.TestCase):
             #TODO pure environments, i.e. reset, and  also, make init faster
             with self.subTest(fname): #TODO how to get pycharm to log subtests properly?
                 #assert f.check_solution("f_1", "select *  from konyvtar.tag ORDER BY vezeteknev DESC") == True
-                my_transformer, stored_transformer, result = f.check_solution(fname, None,
+                my_transformer, stored_transformer, result = f.check_solution(fname, None, mylog,
                                                                               reuse_stored=stored_transformer.scopeprefix if stored_transformer is not None else None,
                                                                               reuse_my=my_transformer.scopeprefix if my_transformer is not None else None)
                 self.assertTrue(result)
-                _, _, result = f.check_solution(fname, "select 65537 from dual", reuse_stored=stored_transformer.scopeprefix, reuse_my=my_transformer.scopeprefix)
+                _, _, result = f.check_solution(fname, "select 65537 from dual", mylog, reuse_stored=stored_transformer.scopeprefix, reuse_my=my_transformer.scopeprefix)
                 self.assertFalse(result)
 
     @unittest.skip
     def testhajo(self):
         prefix = "unique_prefix1_"
         d = DB()
-        d.connect(*open("cred","r").read().split())
+        d.connect(*open("cred","r").read().split(":"))
         #TODO un****
         d.conn.execute(text("alter session set NLS_NUMERIC_CHARACTERS=',.'"))
         d.conn.execute(text("select * from all_synonyms"))
         d.conn.commit() # needed because above implicitly starts transaction...
         synonyms = [x[0].lower() for x in d.conn.execute(text("select synonym_name from all_synonyms")).fetchall()]
         scope = Scope(public_synonyms=synonyms)  # TODO not dynamic enough? but it will work for now
-        t = SQLTransformer(scope, prefix, open("cred","r").read().split()[0])
+        t = SQLTransformer(scope, prefix, open("cred","r").read().split(":")[0])
         f = Feladatsor(d, t, "hajo", {"create": ["create_ship.sql"],  # TODO assert all exist (construct path object)
                                       "insert": ["insert_ship.sql"],
                                       "init": [],  # TODO cant handle pl/sql ["update_date_ship.sql"],
@@ -602,10 +624,10 @@ class Test(unittest.TestCase):
 if __name__ == '__main__':
     prefix = "unique_prefix1_"
     d = DB()
-    d.connect(*open("cred","r").read().split())
+    d.connect(*open("cred","r").read().split(":"))
     synonyms = [x[0].lower() for x in d.conn.execute(text("select synonym_name from all_synonyms")).fetchall()]
     scope = Scope(public_synonyms=synonyms)# TODO not dynamic enough? but it will work for now
-    t = SQLTransformer(scope, prefix, open("cred","r").read().split()[0])
+    t = SQLTransformer(scope, prefix, open("cred","r").read().split(":")[0])
     f = Feladatsor(d, t, "hajo", {"create": ["create_ship.sql"], #TODO assert all exist (construct path object)
                                   "insert": ["insert_ship.sql"],
                                   "init": [], #TODO cant handle pl/sql ["update_date_ship.sql"],
